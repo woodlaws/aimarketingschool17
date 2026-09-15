@@ -88,6 +88,18 @@ export function BookTimeline() {
         {BOOKS.map((book, index) => <BookCover key={book.src} book={book} index={index} />)}
       </ul>
 
+      <FadeUp className="mt-6 md:ml-auto md:max-w-[560px]">
+        <aside className="border-l-[3px] border-brand bg-gray-50 px-5 py-4 shadow-sm" aria-label="ChatGPT 마케팅 집필 배경">
+          <p className="text-base font-black text-ink">
+            이 책만, <span className="hl">가장 먼저 쓰지 않았습니다</span>.
+          </p>
+          <p className="mt-3 text-sm font-semibold leading-7 text-slate-500">
+            2023년부터 2년간 직접 써보며 정리했고, 2025년에 냈습니다.<br />
+            실무에서 검증된 것만 담고 싶었습니다.
+          </p>
+        </aside>
+      </FadeUp>
+
       <div className="relative mx-auto mt-10 hidden max-w-[900px] px-2 pb-8 md:block" aria-label="저서 출간 연도: 2014년부터 2025년까지 11년">
         <div className="relative h-px bg-slate-300">
           {BOOKS.map((book) => {
