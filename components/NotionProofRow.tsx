@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
 import { FadeUp } from "@/components/Motion";
 import { ProofLightbox } from "@/components/ProofLightbox";
+import { DriveStrip } from "@/components/DriveStrip";
 
 const notionItems = [
   {
@@ -63,7 +64,7 @@ export function NotionProofRow() {
   };
 
   return (
-    <div className="bg-[#F5F1E7] pt-16 md:pt-24">
+    <div data-notion-proof className="bg-[#F5F1E7] pt-16 md:pt-24">
       <div className="mx-auto w-full max-w-[1140px]">
         <FadeUp className="px-5 text-center md:px-8">
           <span className="inline-flex rounded-full bg-brand-dark px-4 py-2 text-sm font-black text-white">1주차 수업 결과물</span>
@@ -132,9 +133,11 @@ export function NotionProofRow() {
           ))}
         </div>
 
+        <DriveStrip />
+
         <div className="mt-12 bg-brand-dark px-5 py-12 text-center text-white md:mt-16 md:px-8 md:py-16">
-          <FadeUp><p className="text-xl font-bold leading-snug md:text-3xl">이건 12주차 결과물이 아닙니다.</p></FadeUp>
-          <FadeUp delay={0.4}><p className="mt-7 text-[26px] font-black leading-snug text-accent md:text-[40px]">1주차, 딱 한 번 수업 듣고 만든 겁니다.</p></FadeUp>
+          <FadeUp><p className="text-xl font-bold leading-snug md:text-3xl">화면도, 파일도, 1주차에 끝냅니다.</p></FadeUp>
+          <FadeUp delay={0.4}><p className="mt-7 text-2xl font-black leading-snug text-accent md:text-[38px]">12주차 결과물이 아니라, 첫 수업 결과물입니다.</p></FadeUp>
         </div>
         <FadeUp className="px-5">
           <p className="mx-auto mt-9 max-w-[520px] text-center text-lg font-semibold leading-8 text-slate-500">도구가 어려운 게 아니라, 어디부터 손댈지를 몰랐던 겁니다.</p>
