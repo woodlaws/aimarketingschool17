@@ -11,15 +11,15 @@ export function Fear() {
 }
 
 const curriculum = [
-  ["내 업종 그대로, 콘텐츠 생산 라인 만들기", "오늘 밤 바로 돌릴 수 있는 프롬프트 흐름"],
-  ["글 1개 → 숏폼 3개 + 카드뉴스 10장 확장", "콘텐츠 1개를 10개로 늘리는 공식"],
-  ["코딩 없이, 문의가 들어오는 홈페이지 제작", "실시간 제작 시연"],
-  ["AI 직원 세팅 — 기획·조사·보고서 분업", "내가 안 해도 되는 일 목록"],
-  ["내 사업에 적용할 첫 번째 1개 정하기", "특강 끝나고 실행할 액션 1개"]
+  { stage: "②", title: "내 업종 그대로, 콘텐츠 생산 라인 만들기", sub: "오늘 밤 바로 돌릴 수 있는 프롬프트 흐름" },
+  { stage: "③", title: "글 1개 → 숏폼 3개 + 카드뉴스 10장 확장", sub: "콘텐츠 1개를 10개로 늘리는 공식" },
+  { stage: "④", title: "코딩 없이, 문의가 들어오는 홈페이지 제작", sub: "실시간 제작 시연" },
+  { stage: "③", title: "AI 직원 세팅 — 기획·조사·보고서 분업", sub: "내가 안 해도 되는 일 목록" },
+  { stage: "②", title: "내 사업에 적용할 첫 번째 1개 정하기", sub: "특강 끝나고 실행할 액션 1개" }
 ];
 
 export function Curriculum() {
-  return <section className="sales-section bg-surface"><div className="sales-wrap"><FadeUp><h2 className="sales-title">2시간 30분,<br />이 5개를 화면 켜고 만들어 보여드립니다.</h2></FadeUp><div className="mt-12 divide-y divide-slate-200 border-y border-slate-300">{curriculum.map(([title,sub],i)=><FadeUp key={title}><article className="grid grid-cols-[3.5rem_1fr] gap-3 py-6 md:grid-cols-[5rem_1fr]"><span className="text-3xl font-black text-brand md:text-4xl">{String(i+1).padStart(2,"0")}</span><div><h3 className="text-lg font-extrabold md:text-xl">{title}</h3><p className="mt-2 leading-7 text-muted">{sub}</p></div></article></FadeUp>)}</div><FadeUp><p className="mt-12 text-center text-2xl font-black leading-relaxed md:text-4xl">설명하지 않습니다.<br />화면 켜고, 만들어서 보여드립니다.</p></FadeUp></div></section>;
+  return <section className="sales-section bg-surface"><div className="sales-wrap"><FadeUp><h2 className="sales-title">2시간 30분,<br />이 5개를 화면 켜고 만들어 보여드립니다.</h2></FadeUp><div className="mt-12 divide-y divide-slate-200 border-y border-slate-300">{curriculum.map(({stage,title,sub},i)=><FadeUp key={title}><article className="grid grid-cols-[3.5rem_1fr] gap-3 py-6 md:grid-cols-[5rem_1fr]"><div><span className="text-3xl font-black text-brand md:text-4xl">{String(i+1).padStart(2,"0")}</span><span className="mt-2 flex h-7 w-7 items-center justify-center rounded-full bg-brand text-xs font-black text-white" aria-label={"플라이휠 " + stage + " 단계"}>{stage}</span></div><div><h3 className="text-lg font-extrabold md:text-xl">{title}</h3><p className="mt-2 leading-7 text-muted">{sub}</p></div></article></FadeUp>)}</div><FadeUp><p className="mt-12 text-center text-2xl font-black leading-relaxed md:text-4xl">설명하지 않습니다.<br />화면 켜고, 만들어서 보여드립니다.</p></FadeUp></div></section>;
 }
 
 const comparison = [
@@ -33,5 +33,5 @@ const comparison = [
 ];
 
 export function Comparison() {
-  return <section className="sales-section bg-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title">왜 이 특강이어야 하나요?</h2></FadeUp><FadeUp className="no-scrollbar mt-10 overflow-x-auto"><table className="min-w-[680px] border-collapse text-center text-sm md:text-base"><thead><tr><th className="border border-slate-200 bg-slate-100 p-4 text-left">비교 항목</th><th className="border border-slate-200 bg-slate-100 p-4">유튜브 무료 강의</th><th className="border border-slate-200 bg-slate-100 p-4">일반 AI 강의</th><th className="border border-blue-700 bg-brand p-4 text-white">AI마케팅스쿨 무료특강</th></tr></thead><tbody>{comparison.map(row=><tr key={row[0]}>{row.map((cell,i)=><td key={i} className={`border p-4 ${i===0?"text-left font-bold":""} ${i===3?"border-blue-700 bg-blue-50 font-black text-brand":"border-slate-200"}`}>{cell}</td>)}</tr>)}</tbody></table></FadeUp></div></section>;
+  return <section className="sales-section bg-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title">왜 이 특강이어야 하나요?</h2></FadeUp><FadeUp className="no-scrollbar mt-10 overflow-x-auto"><table className="min-w-[680px] border-collapse text-center text-sm md:text-base"><thead><tr><th className="border border-slate-200 bg-slate-100 p-4 text-left">비교 항목</th><th className="border border-slate-200 bg-slate-100 p-4">유튜브 무료 강의</th><th className="border border-slate-200 bg-slate-100 p-4">일반 AI 강의</th><th className="border border-blue-700 bg-brand p-4 text-white">AI마케팅스쿨 무료특강</th></tr></thead><tbody>{comparison.map(row=><tr key={row[0]}>{row.map((cell,i)=><td key={i} className={"border p-4 " + (i===0?"text-left font-bold ":"") + (i===3?"border-blue-700 bg-blue-50 font-black text-brand":"border-slate-200")}>{cell}</td>)}</tr>)}</tbody></table></FadeUp></div></section>;
 }
