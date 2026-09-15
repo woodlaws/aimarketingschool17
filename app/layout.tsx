@@ -5,7 +5,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://aimarketingschool17.vercel.app"),
   title: "AI로 돈이 들어오는 구조 | AI마케팅스쿨 무료특강 (9/18 밤 8시)",
-  description: "ChatGPT 2년째 쓰는데 통장은 그대로인 이유. 콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간 30분 동안 화면 켜고 보여드립니다. 참가비 0원, 녹화본 없음.",
+  description: "ChatGPT 3년째 쓰는데 통장은 그대로인 이유. 콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간 30분 동안 화면 켜고 보여드립니다. 참가비 0원, 녹화본 없음.",
   openGraph: {
     title: "AI로 돈이 들어오는 구조 | AI마케팅스쿨 무료특강",
     description: "콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간 30분 동안 보여드립니다.",
