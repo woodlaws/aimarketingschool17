@@ -21,7 +21,7 @@ async function verify(viewport, label) {
   page.on("requestfailed", (request) => failedRequests.push({ url: request.url(), error: request.failure()?.errorText }));
   page.on("response", (response) => { if (response.status() >= 400) failedRequests.push({ url: response.url(), status: response.status() }); });
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.goto("http://127.0.0.1:4191/#proof", { waitUntil: "networkidle" });
+  await page.goto("http://127.0.0.1:4192/#proof", { waitUntil: "networkidle" });
 
   const notionBadge = page.getByText("1주차 수업 결과물", { exact: true });
   await notionBadge.scrollIntoViewIfNeeded();

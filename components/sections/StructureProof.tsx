@@ -1,5 +1,4 @@
 import { FadeUp } from "@/components/Motion";
-import { ProofImage } from "@/components/ProofImage";
 import { ProofRow } from "@/components/ProofRow";
 import { SiteProofRow } from "@/components/SiteProofRow";
 import { ReviewProofRow } from "@/components/ReviewProofRow";
@@ -17,6 +16,5 @@ export function FourStepStructure() {
 }
 
 export function Proof() {
-  const results = Array.from({length:9},(_,i)=>i+1);
-  return <section id="proof" className="bg-surface"><NotionProofRow /><ProofRow /><SiteProofRow /><ReviewProofRow /><div className="sales-wrap py-16 md:py-24"><FadeUp><h2 className="sales-title">말로 하면 안 믿으시죠.<br />그래서 결과만 보여드립니다.</h2></FadeUp><div className="mt-12 grid gap-5 md:grid-cols-3">{results.map((n)=><FadeUp key={n}><ProofImage forceFallback src={`/proof/result-${String(n).padStart(2,"0")}.png`} caption={`수강생 결과물 ${String(n).padStart(2,"0")}`} /></FadeUp>)}</div><FadeUp><div className="inverse-quote">이분들, 6개월 전엔<br />ChatGPT 유료 결제도 안 해보신 분들입니다.</div></FadeUp></div></section>;
+  return <section id="proof" className="bg-surface"><NotionProofRow /><ProofRow /><SiteProofRow /><ReviewProofRow /></section>;
 }
