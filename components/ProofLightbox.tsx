@@ -10,7 +10,7 @@ export type ProofLightboxImage = {
   height: number;
 };
 
-export function ProofLightbox({ image, onClose, returnFocus }: { image: ProofLightboxImage; onClose: () => void; returnFocus?: HTMLElement | null }) {
+export function ProofLightbox({ image, onClose, returnFocus, wide = false }: { image: ProofLightboxImage; onClose: () => void; returnFocus?: HTMLElement | null; wide?: boolean }) {
   const [missing, setMissing] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -52,7 +52,7 @@ export function ProofLightbox({ image, onClose, returnFocus }: { image: ProofLig
       >
         닫기 ✕
       </button>
-      <div className="mx-auto w-full max-w-5xl overflow-hidden rounded-lg bg-white shadow-2xl">
+      <div className={`mx-auto w-full overflow-hidden rounded-lg bg-white shadow-2xl ${wide ? "max-w-[95vw]" : "max-w-5xl"}`}>
         {missing ? (
           <div className="flex min-h-[70vh] items-center justify-center text-slate-500">이미지를 불러오지 못했습니다.</div>
         ) : (

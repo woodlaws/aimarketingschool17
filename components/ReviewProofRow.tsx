@@ -176,6 +176,11 @@ export function ReviewProofRow() {
   return (
     <div className="bg-white py-16 md:py-24">
       <div className="mx-auto w-full max-w-[1100px] px-5 md:px-8 lg:px-0">
+        <div className="flex items-center gap-4 pb-12" aria-hidden="true">
+          <span className="h-px flex-1 bg-slate-300" />
+          <span className="text-sm font-black text-slate-500">직접 쓴 후기입니다</span>
+          <span className="h-px flex-1 bg-slate-300" />
+        </div>
         <FadeUp className="text-center">
           <span className="inline-flex rounded-full bg-brand-dark px-4 py-2 text-sm font-black text-white">네이버 카페 실제 후기</span>
           <h2 className="mt-6 text-[clamp(2.3rem,5vw,4rem)] font-black leading-[1.12] tracking-[-0.04em] text-ink">
