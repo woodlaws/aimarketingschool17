@@ -15,6 +15,15 @@ mark { color: inherit; background: linear-gradient(transparent 42%, rgba(250,204
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 summary::-webkit-details-marker { display: none; }
+.hl {
+  color: #111827;
+  font-weight: 800;
+  text-decoration-line: underline;
+  text-decoration-color: #dc2626;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+  text-decoration-skip-ink: none;
+}
 @media (min-width: 768px) {
   .sales-section { padding-top: 7rem; padding-bottom: 7rem; }
   .sales-title { font-size: 2.75rem; }

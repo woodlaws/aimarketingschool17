@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { FadeUp } from "@/components/Motion";
+import { ProofLightbox } from "@/components/ProofLightbox";
 
 const proofItems = [
   {
@@ -42,31 +43,8 @@ export function ProofRow() {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [failedImages, setFailedImages] = useState<number[]>([]);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const triggerRefs = useRef<Array<HTMLButtonElement | null>>([]);
-
-  useEffect(() => {
-    if (activeIndex === null) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    closeButtonRef.current?.focus();
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setActiveIndex(null);
-      if (event.key === "Tab") {
-        event.preventDefault();
-        closeButtonRef.current?.focus();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", handleKeyDown);
-      triggerRefs.current[activeIndex]?.focus();
-    };
-  }, [activeIndex]);
+  const closeLightbox = useCallback(() => setActiveIndex(null), []);
 
   const markFailed = (index: number) => {
     setFailedImages((current) => current.includes(index) ? current : [...current, index]);
@@ -158,40 +136,7 @@ export function ProofRow() {
         </FadeUp>
       </div>
 
-      {activeIndex !== null ? (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label={`${proofItems[activeIndex].title} 원본 이미지`}
-          className="fixed inset-0 z-[100] overflow-y-auto bg-black/85 px-4 py-16 md:px-8"
-          onMouseDown={(event) => { if (event.target === event.currentTarget) setActiveIndex(null); }}
-        >
-          <button
-            ref={closeButtonRef}
-            type="button"
-            onClick={() => setActiveIndex(null)}
-            className="fixed right-4 top-4 z-[101] rounded-full bg-white px-4 py-3 text-sm font-black text-ink shadow-xl focus-visible:outline focus-visible:outline-4 focus-visible:outline-accent md:right-8 md:top-8"
-            aria-label="확대 이미지 닫기"
-          >
-            닫기 ✕
-          </button>
-          <div className="mx-auto w-full max-w-5xl overflow-hidden rounded-lg bg-white shadow-2xl">
-            {failedImages.includes(activeIndex) ? (
-              <div className="flex min-h-[70vh] items-center justify-center text-slate-500">이미지를 불러오지 못했습니다.</div>
-            ) : (
-              <Image
-                src={proofItems[activeIndex].src}
-                alt={proofItems[activeIndex].alt}
-                width={proofItems[activeIndex].width}
-                height={proofItems[activeIndex].height}
-                sizes="100vw"
-                className="h-auto w-full"
-                onError={() => markFailed(activeIndex)}
-              />
-            )}
-          </div>
-        </div>
-      ) : null}
+      {activeIndex !== null ? <ProofLightbox key={proofItems[activeIndex].src} image={proofItems[activeIndex]} onClose={closeLightbox} returnFocus={triggerRefs.current[activeIndex]} /> : null}
     </div>
   );
 }
