@@ -3,6 +3,7 @@ import { ProofRow } from "@/components/ProofRow";
 import { SiteProofRow } from "@/components/SiteProofRow";
 import { ReviewProofRow } from "@/components/ReviewProofRow";
 import { NotionProofRow } from "@/components/NotionProofRow";
+import { VideoWorks } from "@/components/sections/VideoWorks";
 
 const steps = [
   { no: "01", title: "만들기", description: "고객의 질문에서 콘텐츠 소재를 뽑아 AI로 생산", result: "매일 나오는 콘텐츠" },
@@ -16,5 +17,5 @@ export function FourStepStructure() {
 }
 
 export function Proof() {
-  return <section id="proof" className="bg-surface"><NotionProofRow /><ProofRow /><SiteProofRow /><ReviewProofRow /></section>;
+  return <section id="proof" className="bg-surface"><NotionProofRow /><ProofRow /><VideoWorks /><SiteProofRow /><ReviewProofRow /></section>;
 }
