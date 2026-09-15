@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #F8FAFC; color: #111827; font-family: Pretendard, Arial, sans-serif; letter-spacing: -.02em; }
+* { box-sizing: border-box; }
+mark { color: inherit; background: linear-gradient(transparent 42%, rgba(250,204,21,.72) 42%); padding: 0 .05em; }
+.sales-section { padding: 4rem 1.25rem; }
+.sales-wrap { width: 100%; max-width: 680px; margin: 0 auto; }
+.sales-title { font-size: 1.75rem; font-weight: 800; line-height: 1.35; letter-spacing: -.035em; }
+.sales-body { font-size: 1rem; line-height: 1.8; }
+.inverse-quote { margin-top: 2.5rem; background: #111827; color: white; padding: 2rem 1.25rem; text-align: center; font-size: 1.45rem; font-weight: 800; line-height: 1.55; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+summary::-webkit-details-marker { display: none; }
+@media (min-width: 768px) {
+  .sales-section { padding-top: 7rem; padding-bottom: 7rem; }
+  .sales-title { font-size: 2.75rem; }
+  .sales-body { font-size: 1.125rem; }
+  .inverse-quote { padding: 3rem; font-size: 1.85rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
