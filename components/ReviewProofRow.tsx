@@ -133,7 +133,7 @@ const escapedHighlight = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g,
 function HighlightedQuote({ review, compact = false }: { review: ReviewItem; compact?: boolean }) {
   const parts = review.quote.split(new RegExp(`(${review.highlights.map(escapedHighlight).join("|")})`, "g"));
   return (
-    <blockquote className={`whitespace-pre-line border-l-[3px] border-danger pl-5 font-semibold leading-[1.85] text-slate-700 ${compact ? "text-base" : "text-base md:text-lg"}`}>
+    <blockquote className={`review-quote whitespace-pre-line border-l-[3px] border-danger pl-5 font-semibold text-slate-700 ${compact ? "text-base" : "text-base md:text-lg"}`}>
       {parts.map((part, index) => review.highlights.includes(part) ? <span key={`${part}-${index}`} className="hl">{part}</span> : part)}
     </blockquote>
   );

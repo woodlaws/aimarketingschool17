@@ -153,7 +153,7 @@ export function ApplyForm() {
   const transition = reduceMotion ? { duration: 0 } : { duration: 0.25 };
 
   return (
-    <div className="mx-auto w-full max-w-3xl overflow-hidden rounded-2xl bg-white p-6 shadow-sales md:p-9">
+    <div className="form-panel mx-auto w-full max-w-3xl overflow-hidden rounded-2xl bg-white p-6 shadow-sales md:p-9">
       <p className="sr-only" aria-live="polite">
         {submitting ? "전송 중입니다." : step === "questions" ? "신청이 완료되었습니다. 추가 질문 단계입니다." : step === "done" ? "모든 절차가 완료되었습니다." : error}
       </p>

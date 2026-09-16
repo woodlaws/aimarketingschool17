@@ -2,89 +2,140 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: light; }
+@font-face {
+  font-family: Pretendard;
+  src: url('/fonts/pretendard-variable.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --type-hero: clamp(2.25rem, 9.4vw, 2.625rem);
+  --type-section: clamp(1.875rem, 7.75vw, 2.125rem);
+  --type-emphasis: clamp(1.625rem, 6.98vw, 1.875rem);
+  --type-card: clamp(1.4375rem, 6vw, 1.625rem);
+  --type-body: 1.25rem;
+  --type-info: 1.25rem;
+  --type-support: 1.125rem;
+  --type-button: 1.375rem;
+  --type-footer: 1rem;
+  --section-space: clamp(4rem, 16vw, 5.5rem);
+  --reading-width: 56.25rem;
+  --showcase-width: 70rem;
+}
+
 html { scroll-behavior: smooth; }
-body { margin: 0; background: #F8FAFC; color: #111827; font-family: Pretendard, Arial, sans-serif; letter-spacing: -.02em; }
+body { margin: 0; background: #f8fafc; color: #111827; font-family: Pretendard, Arial, sans-serif; }
 html, body, * { word-break: keep-all; overflow-wrap: break-word; }
 * { box-sizing: border-box; }
-mark { color: inherit; background: linear-gradient(transparent 42%, rgba(250,204,21,.72) 42%); padding: 0 .05em; }
-.sales-section { padding: 4rem 1.25rem; }
-.sales-wrap { width: 100%; max-width: 680px; margin: 0 auto; }
-.sales-title { font-size: 40px; font-weight: 800; line-height: 1.3; letter-spacing: -1.5px; }
-.sales-body { font-size: 19px; line-height: 1.7; letter-spacing: -.4px; }
-.inverse-quote { margin-top: 2.5rem; background: #111827; color: white; padding: 2rem 1.25rem; text-align: center; font-size: 23px; font-weight: 800; line-height: 1.7; letter-spacing: -.5px; }
+mark { color: inherit; background: linear-gradient(transparent 61%, rgba(250, 204, 21, .72) 61%); padding: 0 .05em; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 summary::-webkit-details-marker { display: none; }
-.hl {
-  color: #111827;
-  font-weight: 800;
-  text-decoration-line: underline;
-  text-decoration-color: #dc2626;
-  text-decoration-thickness: 3px;
-  text-underline-offset: 5px;
-  text-decoration-skip-ink: none;
-}
-/* Keep Korean words intact and give the numbered flywheel cards their full title width. */
-main { font-size: 19px; }
-main h1, main h1[class] { font-size: 64px !important; font-weight: 900 !important; line-height: 1.2 !important; letter-spacing: -2px !important; }
-main h2, main h2[class] { font-size: 40px !important; font-weight: 800 !important; line-height: 1.3 !important; letter-spacing: -1.5px !important; }
-main h3, main h3[class] { font-size: 26px !important; font-weight: 800 !important; line-height: 1.35 !important; letter-spacing: -1px !important; }
-main p { line-height: 1.7; letter-spacing: -.4px; }
-main .sales-body { font-size: 19px; line-height: 1.7; }
-main .inverse-quote { font-size: 23px; line-height: 1.7; }
-main :is([class~="text-xs"], [class~="text-sm"], [class~="text-base"], [class~="text-[10px]"], [class~="text-[12px]"], [class~="text-[15px]"]) { font-size: 17px !important; }
-main :is(label, legend, input, textarea, select, figcaption, th, td) { font-size: 17px; }
-main :is(input, textarea, select)::placeholder { font-size: 17px; }
-main :is(.flywheel-pill, .flywheel-tag, [class~="rounded-full"]) { white-space: nowrap; overflow-wrap: normal; }
-main .flywheel-card { padding: 28px; gap: 0; }
-main .flywheel-num { flex: 0 0 auto; width: 46px; height: 46px; font-size: 18px; }
-main .flywheel-title { min-width: 0; font-size: 26px !important; font-weight: 800; line-height: 1.35; letter-spacing: -1px; }
-main .flywheel-desc { font-size: 17px; font-weight: 400; line-height: 1.65; letter-spacing: -.4px; }
-main .flywheel-pill { font-size: 17px; font-weight: 700; line-height: 1; }
-main .flywheel-tag { font-size: 17px; font-weight: 600; line-height: 1; }
-main .flywheel-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-main [data-video-card] p, main [data-notion-card] p[class~="text-sm"], main [data-site-card] p[class~="text-sm"] { font-size: 17px !important; line-height: 1.65; }
-main [data-video-card] > div:last-child { padding: 20px; }
-main [data-flywheel-flow] { white-space: nowrap; }
+.hl { color: inherit; font-weight: 800; text-decoration: underline #dc2626 3px; text-underline-offset: 5px; text-decoration-skip-ink: none; }
+
+main { font-size: var(--type-body); }
+main .sales-section { padding: var(--section-space) clamp(20px, 5.4vw, 24px); }
+main .sales-wrap { width: 100%; max-width: var(--reading-width); margin-inline: auto; }
+main .showcase-wrap { width: 100%; max-width: var(--showcase-width); margin-inline: auto; }
+main :is(h1, h1[class]) { font-size: var(--type-hero); font-weight: 900; line-height: 1.2; letter-spacing: -.02em; }
+main :is(h2, h2[class]), main .sales-title { font-size: var(--type-section); font-weight: 800; line-height: 1.25; letter-spacing: -.02em; }
+main :is(h3, h3[class], h4, h4[class]) { font-size: var(--type-card); font-weight: 700; line-height: 1.3; letter-spacing: -.02em; }
+main :is(p, p[class], blockquote, blockquote[class], li, li[class]) { font-size: var(--type-body); font-weight: 500; line-height: 1.68; letter-spacing: 0; }
+main .sales-body { font-size: var(--type-body); line-height: 1.68; }
+main :is(.inverse-quote, .story-banner, .story-lead) { font-size: var(--type-emphasis); font-weight: 700; line-height: 1.4; letter-spacing: -.015em; }
+main .inverse-quote { margin-top: 2.5rem; padding: clamp(1.75rem, 5vw, 3rem); text-align: center; color: white; background: #111827; }
+main :is(span.text-xs, span.text-sm, span.text-base, div.text-sm, a.text-sm, a.text-base, time.text-xs, .type-support, figcaption, figcaption[class]), main [class~="text-[10px]"], main [class~="text-[12px]"], main [class~="text-[15px]"] { font-size: var(--type-support); line-height: 1.6; }
+main :is(label, legend, input, textarea, select, th, td) { font-size: var(--type-info); line-height: 1.5; }
+main :is(input, textarea, select)::placeholder { font-size: var(--type-info); }
+main summary { font-size: var(--type-body); line-height: 1.45; }
+main .form-panel summary { font-size: var(--type-support); }
+main :is(button, button[class], a.sticky-cta-button, .primary-cta) { font-size: var(--type-button); font-weight: 700; }
+main :is(button, a.sticky-cta-button, .primary-cta, input:not([type="checkbox"]):not([type="radio"]), select) { min-height: 56px; }
+main textarea { min-height: 100px; }
+main footer, main footer :is(p[class], p:not([class]), span, a) { font-size: var(--type-footer); line-height: 1.6; }
+main :is(.text-muted, .text-slate-400, .text-slate-500, .text-slate-600, .text-gray-400, .text-gray-500, .text-gray-600) { color: #374151; }
+main :is(.bg-slate-950, .bg-slate-900, .bg-slate-800, .bg-brand-dark, .bg-brand, .bg-navy) :is(.text-muted, .text-slate-400, .text-slate-500, .text-slate-600, .text-gray-400, .text-gray-500, .text-gray-600) { color: #d5dae3; }
+main footer.text-slate-400 { color: #d5dae3; }
+
+/* Message rhythm and widths are independent: short statements do not inherit card widths. */
+main .reading-copy { max-width: var(--reading-width); margin-inline: auto; }
+main .story-lead { max-width: 24em; margin-inline: auto; }
+main .story-banner { max-width: 28em; margin-inline: auto; }
+main .section-eyebrow { font-size: var(--type-support); font-weight: 700; line-height: 1.3; }
+main .hero-meta, main .hero-meta p { font-size: var(--type-info); line-height: 1.5; }
+main .hero-note { font-size: var(--type-support); }
+main .trust-cell { min-height: 88px; }
 main .trust-mobile { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-main .trust-number { font-weight: 800; }
-main .trust-description { font-weight: 600; }
+main .trust-number { font-size: max(26px, var(--type-card)); font-weight: 800; line-height: 1.2; }
+main .trust-description { font-size: var(--type-support); font-weight: 600; line-height: 1.35; }
 
-@media (min-width: 821px) {
-  .sales-section { padding-top: 7rem; padding-bottom: 7rem; }
-  .inverse-quote { padding: 3rem; }
-  main .sales-section.bg-slate-950 .sales-body.text-slate-500 { color: #D5DAE3; font-weight: 600; }
+main .flywheel-card { min-width: 0; padding: clamp(1.375rem, 2vw, 1.75rem); }
+main .flywheel-num { flex: 0 0 auto; width: 46px; height: 46px; font-size: var(--type-support); }
+main .flywheel-title { min-width: 0; font-size: var(--type-card); font-weight: 800; line-height: 1.3; }
+main .flywheel-desc { font-size: var(--type-body); line-height: 1.6; }
+main .flywheel-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+main :is(.flywheel-pill, .flywheel-tag) { font-size: var(--type-support); font-weight: 700; line-height: 1.2; white-space: nowrap; overflow-wrap: normal; }
+main [data-flywheel-flow] { white-space: nowrap; }
+main [data-flywheel-flow] :is(div, span) { font-size: var(--type-support); }
+main :is([data-video-card], [data-notion-card], [data-site-card]) { min-width: 0; }
+main :is([data-video-card], [data-notion-card], [data-site-card]) p { font-size: var(--type-body); line-height: 1.6; }
+main :is([data-video-card], [data-notion-card], [data-site-card]) .type-support { font-size: var(--type-support); }
+main [data-video-card] > div:last-child { padding: clamp(1.25rem, 2vw, 1.5rem); }
+main .proof-card-title { font-size: var(--type-card); line-height: 1.3; }
+main .proof-card-quote { font-size: var(--type-body); line-height: 1.6; }
+main .proof-card-maker { font-size: var(--type-support); line-height: 1.5; }
+main blockquote.review-quote { font-size: var(--type-body); line-height: 1.65; }
+main .review-byline, main .book-cover-title, main .proof-caption { font-size: var(--type-support); line-height: 1.5; }
+main .book-cover-title { display: block; }
+main .form-panel :is(label, legend, input, textarea, select) { font-size: var(--type-info); }
+main .form-panel :is(input:not([type="checkbox"]):not([type="radio"]), select) { min-height: 60px; }
+main .form-panel button[type="submit"] { min-height: 60px; font-size: var(--type-button); }
+main .form-panel .type-support { font-size: var(--type-support); }
+main .sticky-cta-date { font-size: var(--type-info); font-weight: 700; }
+main .sticky-cta a.sticky-cta-button { display: inline-flex; min-height: 60px; align-items: center; justify-content: center; font-size: var(--type-button); }
+
+@media (min-width: 768px) {
+  :root {
+    --type-hero: 3.5rem;
+    --type-section: 2.5rem;
+    --type-emphasis: 2rem;
+    --type-card: 1.75rem;
+    --type-body: 1.375rem;
+    --type-info: 1.3125rem;
+    --type-support: 1.1875rem;
+    --type-button: 1.4375rem;
+    --section-space: 6rem;
+  }
 }
-
-@media (max-width: 820px) {
-  main { font-size: 17px; }
-  main h1, main h1[class] { font-size: 34px !important; line-height: 1.2 !important; }
-  main h2, main h2[class] { font-size: 28px !important; line-height: 1.3 !important; }
-  main h3, main h3[class] { font-size: 23px !important; line-height: 1.35 !important; }
-  main h4 { font-size: 23px !important; line-height: 1.35 !important; }
-  main p { line-height: 1.7; }
-  main .sales-title { font-size: 28px; }
-  main .sales-body { font-size: 17px; line-height: 1.7; }
-  main .inverse-quote { font-size: 19px; line-height: 1.7; }
-  main :is([class~="text-xs"], [class~="text-sm"], [class~="text-[10px]"], [class~="text-[12px]"], [class~="text-[15px]"]) { font-size: 16px !important; }
-  main :is(label, legend, input, textarea, select, figcaption, th, td) { font-size: 16px; }
-  main :is(input, textarea, select)::placeholder { font-size: 16px; }
-  main .flywheel-card { padding: 22px; }
-  main .flywheel-num { width: 40px; height: 40px; font-size: 16px; }
-  main .flywheel-title { font-size: 23px !important; }
-  main .flywheel-desc { font-size: 16px; line-height: 1.6; }
-  main .flywheel-pill, main .flywheel-tag { font-size: 16px; }
-  main .flywheel-tag { padding: 8px 14px; }
-  main [data-video-card] p, main [data-notion-card] p[class~="text-sm"], main [data-site-card] p[class~="text-sm"] { font-size: 16px !important; line-height: 1.6; }
-  main .sales-section.bg-slate-950 .sales-body.text-slate-500 { color: #D5DAE3; font-weight: 600; }
-  main .trust-cell { display: flex; min-height: 88px; align-items: center; justify-content: center; padding: 20px; }
-  main .trust-mobile { display: flex !important; }
-  main .trust-cell > span.hidden { display: none !important; }
-  main .trust-number { font-size: 26px; line-height: 1.2; }
-  main .trust-description { font-size: 17px; line-height: 1.4; }
-  main .sticky-cta-date { font-size: 17px !important; line-height: 1.4; }
-  main .sticky-cta a.sticky-cta-button { display: inline-flex; min-height: 56px; align-items: center; justify-content: center; font-size: 19px !important; }
+@media (min-width: 1024px) {
+  :root {
+    --type-hero: clamp(4rem, 4.6vw, 4.75rem);
+    --type-section: clamp(2.75rem, 2.8vw, 3.25rem);
+    --type-emphasis: clamp(2rem, 2.1vw, 2.5rem);
+    --type-card: clamp(1.75rem, 1.72vw, 2rem);
+    --type-body: 1.5rem;
+    --type-info: clamp(1.375rem, 1.5vw, 1.5rem);
+    --type-support: clamp(1.125rem, 1.25vw, 1.25rem);
+    --type-button: 1.5rem;
+    --type-footer: 1.125rem;
+    --section-space: clamp(6rem, 7vw, 8rem);
+  }
+  main .sales-section { padding-inline: 32px; }
+  main .form-panel :is(input:not([type="checkbox"]):not([type="radio"]), select), main .form-panel button[type="submit"] { min-height: 64px; }
+}
+@media (max-width: 767px) {
+  main .sales-section { padding-inline: 20px; }
+  main .trust-cell { display: flex; align-items: center; justify-content: center; padding: 20px; }
+  main .trust-mobile { display: flex; }
+  main .flywheel-num { width: 42px; height: 42px; }
+  main .sticky-cta { padding-bottom: calc(12px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 339px) {
+  :root { --type-hero: 2.125rem; --type-section: 1.875rem; --type-card: 1.4375rem; }
+  main .sales-section { padding-inline: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

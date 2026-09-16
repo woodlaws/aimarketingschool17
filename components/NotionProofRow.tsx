@@ -80,13 +80,13 @@ export function NotionProofRow() {
         <div
           ref={carouselRef}
           onScroll={updateCarouselIndex}
-          className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 md:grid md:grid-cols-2 md:gap-4 md:overflow-visible md:px-8 lg:grid-cols-3 lg:gap-6 lg:px-0"
+          className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-8 lg:px-0"
         >
           {notionItems.map((item, index) => (
             <FadeUp
               key={item.src}
               delay={index * 0.08}
-              className="w-[88vw] max-w-[390px] shrink-0 snap-center md:w-auto md:max-w-none md:last:col-span-2 md:last:mx-auto md:last:w-[calc(50%-0.5rem)] lg:last:col-span-1 lg:last:mx-0 lg:last:w-auto"
+              className="w-[88vw] max-w-[390px] shrink-0 snap-center md:w-auto md:max-w-none md:last:col-span-2 md:last:mx-auto md:last:w-[calc(50%-0.5rem)]"
             >
               <article data-notion-card className="group h-full overflow-hidden rounded-2xl bg-white shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-sales motion-reduce:transform-none motion-reduce:transition-none">
                 <button

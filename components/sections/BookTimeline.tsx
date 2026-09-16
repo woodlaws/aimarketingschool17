@@ -52,13 +52,13 @@ function BookCover({ book, index, supervised = false }: { book: Book; index: num
     : `임헌수 저서 — ${book.title}, ${book.date.replace(".", "년 ")}월 출간`;
 
   return (
-    <li className={`${supervised ? "w-[27vw] max-w-[105px]" : "w-[30vw] max-w-[132px]"} shrink-0 snap-start md:w-auto md:max-w-none`}>
+    <li className={`${supervised ? "w-[36vw] max-w-[150px]" : "w-[42vw] max-w-[180px]"} shrink-0 snap-start md:w-auto md:max-w-none`}>
       <article className={`group relative ${book.latest ? "lg:scale-[1.15] lg:origin-bottom" : ""} transition-transform duration-300 hover:-translate-y-1.5 motion-reduce:transform-none motion-reduce:transition-none`}>
         <div className="relative aspect-[3/4] overflow-hidden rounded-lg border border-slate-200 bg-slate-100 shadow-md">
           {failed ? (
             <div className="flex h-full items-center justify-center px-2 text-center text-xs font-bold text-slate-500">표지 준비 중</div>
           ) : (
-            <Image src={book.src} alt={alt} fill sizes={supervised ? "105px" : "(max-width: 767px) 30vw, 132px"} className="object-cover" onError={() => setFailed(true)} />
+            <Image src={book.src} alt={alt} fill sizes={supervised ? "(max-width: 767px) 36vw, 150px" : "(max-width: 767px) 42vw, (max-width: 1023px) 30vw, 22vw"} className="object-cover" onError={() => setFailed(true)} />
           )}
           {book.latest ? <span className="absolute left-2 top-2 rounded-full bg-brand px-2 py-1 text-[10px] font-black text-white shadow">최신작</span> : null}
           {supervised ? <span className="absolute left-2 top-2 rounded-full bg-slate-500 px-2 py-1 text-[10px] font-black text-white shadow">감수</span> : null}
@@ -67,7 +67,7 @@ function BookCover({ book, index, supervised = false }: { book: Book; index: num
           <time dateTime={book.date.replace(".", "-")} className={`inline-flex rounded-full px-2.5 py-1 text-xs font-black text-white ${supervised ? "bg-slate-500" : YEAR_BADGES[index]}`}>
             {book.date}
           </time>
-          <p className="mt-2 line-clamp-2 min-h-9 text-xs font-bold leading-[1.45] text-slate-600">{book.title}</p>
+          <p className="book-cover-title mt-2 min-h-9 font-bold text-slate-600">{book.title}</p>
         </div>
       </article>
     </li>
@@ -84,7 +84,7 @@ export function BookTimeline() {
         </p>
       </FadeUp>
 
-      <ul className="no-scrollbar -mx-5 mt-10 flex snap-x gap-3 overflow-x-auto px-5 pb-4 pr-[20vw] md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0 md:pr-0 lg:grid-cols-7 lg:items-end">
+      <ul className="no-scrollbar -mx-5 mt-10 flex snap-x gap-4 overflow-x-auto px-5 pb-4 pr-[20vw] md:mx-0 md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-0 md:pr-0 lg:grid-cols-4 lg:items-end">
         {BOOKS.map((book, index) => <BookCover key={book.src} book={book} index={index} />)}
       </ul>
 

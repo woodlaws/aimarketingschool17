@@ -78,7 +78,7 @@ export function SiteProofRow() {
         <div
           ref={carouselRef}
           onScroll={updateCarouselIndex}
-          className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:px-8 lg:gap-6 lg:px-0"
+          className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-8 lg:px-0"
         >
           {siteProofItems.map((item, index) => (
             <article

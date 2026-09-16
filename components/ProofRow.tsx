@@ -79,7 +79,7 @@ export function ProofRow() {
         <div
           ref={carouselRef}
           onScroll={updateCarouselIndex}
-          className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible md:px-8 lg:gap-6 lg:px-0"
+          className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-8 lg:px-0"
         >
           {proofItems.map((item, index) => (
             <button
@@ -110,9 +110,9 @@ export function ProofRow() {
               </span>
               <span className="block p-6">
                 <span className="text-sm font-black text-brand">{item.tag}</span>
-                <span className="mt-2 block text-xl font-black leading-snug text-ink md:text-2xl">{item.title}</span>
-                <span className="mt-5 block whitespace-pre-line border-l-4 border-accent pl-4 text-[15px] font-semibold leading-7 text-slate-700">{item.quote}</span>
-                <span className="mt-5 block border-t border-slate-200 pt-4 text-sm font-bold text-slate-500">{item.maker}</span>
+                <span className="proof-card-title mt-2 block font-black text-ink">{item.title}</span>
+                <span className="proof-card-quote mt-5 block whitespace-pre-line border-l-4 border-accent pl-4 font-semibold text-slate-700">{item.quote}</span>
+                <span className="proof-card-maker mt-5 block border-t border-slate-200 pt-4 font-bold text-slate-500">{item.maker}</span>
               </span>
             </button>
           ))}

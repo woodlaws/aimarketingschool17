@@ -87,7 +87,7 @@ export function FlywheelSection() {
         <div data-flywheel-flow className="no-scrollbar overflow-x-auto pb-3"><div className="mx-auto flex min-w-max items-center justify-center gap-2 text-sm font-bold text-slate-500">{FLOW.map((label, index) => <div key={label} className="flex items-center gap-2"><span className={index >= 1 && index <= 3 ? "text-brand" : ""}>{label}</span>{index < FLOW.length - 1 ? <span aria-hidden="true" className="text-slate-300">→</span> : null}</div>)}</div></div>
         <FadeUp className="mt-9 text-center">
           <p className="text-xl font-black text-ink md:text-2xl">이 구조, 9월 18일 밤에 직접 보여드립니다</p>
-          <a href="#apply" className="mt-6 inline-flex w-full max-w-[520px] items-center justify-between rounded-xl bg-brand px-6 py-5 text-lg font-black text-white shadow-lg transition hover:bg-blue-700 motion-reduce:transition-none">무료특강 신청하기 <span>→</span></a>
+          <a href="#apply" className="primary-cta mt-6 inline-flex w-full max-w-[520px] items-center justify-between rounded-xl bg-brand px-6 py-5 font-black text-white shadow-lg transition hover:bg-blue-700 motion-reduce:transition-none">무료특강 신청하기 <span>→</span></a>
         </FadeUp>
       </div>
 
