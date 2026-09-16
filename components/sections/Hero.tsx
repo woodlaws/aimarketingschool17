@@ -20,6 +20,11 @@ export function Hero() {
 }
 
 export function TrustBar() {
-  const items = ["13년 현장 강의", "누적 55차 무료특강", "마케팅 저서 7권", "16기 수료생 배출"];
-  return <section className="bg-slate-950 px-5 py-6 text-white"><div className="mx-auto grid max-w-[680px] grid-cols-2 divide-x divide-y divide-white/10 border border-white/10 md:grid-cols-4 md:divide-y-0">{items.map(item => <p key={item} className="px-3 py-4 text-center text-sm font-extrabold md:text-base">{item}</p>)}</div></section>;
+  const items = [
+    { number: "13년", description: "현장 강의", full: "13년 현장 강의" },
+    { number: "55차", description: "누적 무료특강", full: "누적 55차 무료특강" },
+    { number: "7권", description: "마케팅 저서", full: "마케팅 저서 7권" },
+    { number: "16기", description: "수료생 배출", full: "16기 수료생 배출" },
+  ];
+  return <section className="bg-slate-950 px-5 py-6 text-white"><div className="mx-auto grid max-w-[680px] grid-cols-2 divide-x divide-y divide-white/10 border border-white/10 md:grid-cols-4 md:divide-y-0">{items.map(item => <p key={item.full} className="trust-cell px-3 py-4 text-center text-sm font-extrabold md:text-base"><span className="trust-mobile md:hidden"><strong className="trust-number">{item.number}</strong><span className="trust-description">{item.description}</span></span><span className="hidden md:inline">{item.full}</span></p>)}</div></section>;
 }

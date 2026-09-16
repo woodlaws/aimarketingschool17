@@ -18,8 +18,8 @@ export function StickyCTA() {
     return () => window.removeEventListener("scroll", update);
   }, []);
   return (
-    <div className={`fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 px-4 pt-3 shadow-2xl backdrop-blur transition-transform duration-300 md:hidden ${visible ? "translate-y-0" : "translate-y-full"}`} style={{ paddingBottom: "max(.75rem, env(safe-area-inset-bottom))" }}>
-      <div className="mx-auto flex max-w-md items-center justify-between gap-3"><p className="text-xs font-bold leading-tight text-slate-600">9/18(금) 밤 8시<br /><span className="text-brand">참가비 무료</span></p><a href="#apply" className="rounded-lg bg-brand px-5 py-3 text-sm font-extrabold text-white">자리 맡기 →</a></div>
+    <div className={`sticky-cta fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 px-4 pt-3 shadow-2xl backdrop-blur transition-transform duration-300 md:hidden ${visible ? "translate-y-0" : "translate-y-full"}`} style={{ paddingBottom: "calc(12px + env(safe-area-inset-bottom, 0px))" }}>
+      <div className="mx-auto flex max-w-md items-center justify-between gap-3"><p className="sticky-cta-date text-xs font-bold leading-tight text-slate-600">9/18(금) 밤 8시<br /><span className="text-brand">참가비 무료</span></p><a href="#apply" className="sticky-cta-button rounded-lg bg-brand px-5 py-3 text-sm font-extrabold text-white">자리 맡기 →</a></div>
     </div>
   );
 }
