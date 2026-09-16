@@ -24,14 +24,14 @@ const FLYWHEEL_IMAGE = { src: "/proof/flywheel.webp", alt: "AI 수익화 콘텐�
 
 function StepCard({ step, compact = false }: { step: (typeof FLYWHEEL)[number]; compact?: boolean }) {
   return (
-    <li data-flywheel-step={step.no} className={`relative rounded-2xl bg-white ${step.live ? "border-2 border-brand shadow-lg" : "border border-slate-200 opacity-90"} ${compact ? "p-5" : "p-6"}`}>
-      {step.live ? <span className="absolute right-4 top-4 rounded-full bg-brand px-3 py-1.5 text-xs font-black text-white">오늘 밤 공개</span> : null}
-      <div className="flex items-center gap-3 pr-24">
-        <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-black ${step.live ? "bg-brand text-white" : "bg-slate-100 text-slate-600"}`}>{String(step.no).padStart(2, "0")}</span>
-        <h3 className={`${compact ? "text-lg" : "text-xl"} font-black text-ink`}>{step.title}</h3>
+    <li data-flywheel-step={step.no} className={`flywheel-card flex min-w-0 flex-col rounded-2xl bg-white ${step.live ? "border-2 border-brand shadow-lg" : "border border-slate-200 opacity-90"} ${compact ? "p-5" : "p-6"}`}>
+      {step.live ? <div className="mb-3 flex justify-end"><span className="flywheel-pill rounded-full bg-brand px-3 py-1.5 font-black text-white">오늘 밤 공개</span></div> : null}
+      <div className="flex min-w-0 items-center gap-3">
+        <span className={`flywheel-num flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-black ${step.live ? "bg-brand text-white" : "bg-slate-100 text-slate-600"}`}>{String(step.no).padStart(2, "0")}</span>
+        <h3 className="flywheel-title min-w-0 flex-1 font-black text-ink">{step.title}</h3>
       </div>
-      <p className="mt-4 text-[15px] font-semibold leading-7 text-slate-600">{step.desc}</p>
-      <div className="mt-4 flex flex-wrap gap-1.5">{step.tags.map((tag) => <span key={tag} className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-bold text-slate-600">{tag}</span>)}</div>
+      <p className="flywheel-desc mt-4 text-slate-600">{step.desc}</p>
+      <div className="flywheel-tags mt-auto flex flex-wrap gap-2 pt-4">{step.tags.map((tag) => <span key={tag} className="flywheel-tag rounded-full bg-slate-100 px-3 py-2 font-bold text-slate-600">{tag}</span>)}</div>
     </li>
   );
 }
