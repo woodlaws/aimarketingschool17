@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { FadeUp } from "@/components/Motion";
 
 const siteProofItems = [
@@ -31,28 +31,23 @@ const siteProofItems = [
     description: "\"한 번 장보고, 다섯 식구의 일주일을 건강하게.\"\n주간 식단·장보기 목록·레시피·양념사전까지 들어간 콘텐츠형 사이트입니다.",
     domain: "seasonal-family-table-gcv6.vercel.app",
     url: "https://seasonal-family-table-gcv6.vercel.app/"
+  },
+  {
+    src: "/proof/site-04-dmdnp.webp",
+    alt: "대명DnP 공식 홈페이지 — 수강생이 직접 제작한 사인·간판 제작 사이트",
+    tag: "사인·간판 제작",
+    name: "대명DnP",
+    description: "나무현판·아크릴 안내판·LED 전광판까지 6개 제품군을 한 페이지에 정리한 공식 홈페이지.\n회사 연혁과 제작사례로 신뢰를 쌓고 견적 문의로 이어지도록 설계했습니다.",
+    domain: "dmdnp0909-khaki.vercel.app",
+    url: "https://dmdnp0909-khaki.vercel.app/"
   }
 ] as const;
 
 export function SiteProofRow() {
-  const [carouselIndex, setCarouselIndex] = useState(0);
   const [failedImages, setFailedImages] = useState<number[]>([]);
-  const carouselRef = useRef<HTMLDivElement>(null);
 
   const markFailed = (index: number) => {
     setFailedImages((current) => current.includes(index) ? current : [...current, index]);
-  };
-
-  const updateCarouselIndex = () => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-    const cards = Array.from(carousel.querySelectorAll<HTMLElement>("[data-site-proof-card]"));
-    const carouselCenter = carousel.scrollLeft + carousel.clientWidth / 2;
-    const nearest = cards.reduce((best, card, index) => {
-      const distance = Math.abs(card.offsetLeft + card.offsetWidth / 2 - carouselCenter);
-      return distance < best.distance ? { index, distance } : best;
-    }, { index: 0, distance: Number.POSITIVE_INFINITY });
-    setCarouselIndex(nearest.index);
   };
 
   return (
@@ -76,15 +71,13 @@ export function SiteProofRow() {
         </FadeUp>
 
         <div
-          ref={carouselRef}
-          onScroll={updateCarouselIndex}
-          className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-6 md:grid md:grid-cols-2 md:gap-6 md:overflow-visible md:px-8 lg:px-0"
+          className="mt-12 grid grid-cols-1 items-stretch gap-6 px-5 pb-6 md:grid-cols-2 md:px-8 lg:px-0"
         >
           {siteProofItems.map((item, index) => (
             <article
               key={item.url}
               data-site-proof-card
-              className="group w-[82vw] max-w-[350px] shrink-0 snap-center overflow-hidden rounded-2xl bg-white shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-sales motion-reduce:transform-none motion-reduce:transition-none md:w-auto md:max-w-none"
+              className="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-sales motion-reduce:transform-none motion-reduce:transition-none"
             >
               <a
                 href={item.url}
@@ -101,7 +94,7 @@ export function SiteProofRow() {
                     alt={item.alt}
                     fill
                     priority={index === 0}
-                    sizes="(max-width: 768px) 82vw, 33vw"
+                    sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1023px) calc((100vw - 88px) / 2), 550px"
                     className="object-cover object-top"
                     onError={() => markFailed(index)}
                   />
@@ -117,15 +110,15 @@ export function SiteProofRow() {
                 </span>
               </a>
 
-              <div className="p-6">
+              <div className="flex flex-1 flex-col p-6">
                 <p className="text-sm font-black text-brand">{item.tag}</p>
                 <h3 className="mt-2 text-2xl font-black leading-snug text-ink">{item.name}</h3>
-                <p className="mt-4 whitespace-pre-line text-[15px] font-semibold leading-7 text-slate-600">{item.description}</p>
+                <p className="mt-4 whitespace-pre-line break-keep pb-6 text-[15px] font-semibold leading-7 text-slate-600">{item.description}</p>
                 <a
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-6 flex w-full items-center justify-between rounded-full bg-slate-100 px-4 py-3 text-sm font-black text-slate-700 transition-colors hover:bg-brand hover:text-white focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-accent motion-reduce:transition-none"
+                  className="mt-auto flex w-full items-center justify-between rounded-full bg-slate-100 px-4 py-3 text-sm font-black text-slate-700 transition-colors hover:bg-brand hover:text-white focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-accent motion-reduce:transition-none"
                   aria-label={`${item.domain} 새 탭에서 열기`}
                 >
                   <span className="flex min-w-0 items-center gap-2"><span aria-hidden="true">🌐</span><span className="truncate">{item.domain}</span></span>
@@ -136,14 +129,8 @@ export function SiteProofRow() {
           ))}
         </div>
 
-        <div className="flex justify-center gap-2 md:hidden" aria-label={`홈페이지 결과물 ${carouselIndex + 1} / 3`}>
-          {siteProofItems.map((item, index) => (
-            <span key={item.url} aria-hidden="true" className={`h-2.5 rounded-full transition-all ${carouselIndex === index ? "w-7 bg-brand-dark" : "w-2.5 bg-slate-300"}`} />
-          ))}
-        </div>
-
         <div className="mt-12 bg-brand-dark px-5 py-12 text-center text-white md:mt-16 md:px-8 md:py-16">
-          <FadeUp><p className="text-xl font-bold leading-snug md:text-3xl">세 개 다, 개발자 없이 만들었습니다.</p></FadeUp>
+          <FadeUp><p className="text-xl font-bold leading-snug md:text-3xl">네 개 다, 개발자 없이 만들었습니다.</p></FadeUp>
           <FadeUp delay={0.4}><p className="mt-7 text-2xl font-black leading-snug text-accent md:text-4xl">코딩을 배운 게 아니라, 만드는 순서를 배웠습니다.</p></FadeUp>
         </div>
       </div>
