@@ -14,7 +14,7 @@ export function Urgency() {
 }
 
 export function Apply() {
-  return <section id="apply" className="sales-section scroll-mt-6 bg-surface"><div className="sales-wrap"><FadeUp className="text-center"><h2 className="sales-title">0원. 2시간 30분. 자리 하나.</h2><p className="sales-body mt-4 text-muted">지금 신청하시면, 카톡으로 참여 링크를 보내드립니다.</p></FadeUp><FadeUp className="mt-10"><ApplyForm /></FadeUp></div></section>;
+  return <section id="apply" className="sales-section scroll-mt-6 bg-surface"><div className="sales-wrap"><FadeUp className="text-center"><h2 className="sales-title">0원. 2시간 30분. 자리 하나.</h2><p className="sales-body mt-4 text-muted">신청하시면 문자로 참여 링크를 보내드립니다.</p></FadeUp><FadeUp className="mt-10"><ApplyForm /></FadeUp></div></section>;
 }
 
 const faqs = [
