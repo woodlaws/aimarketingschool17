@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useCallback, useRef, useState, type MouseEvent } from "react";
 import { FadeUp } from "@/components/Motion";
-import { ProofLightbox } from "@/components/ProofLightbox";
+import { FlywheelLightbox } from "@/components/FlywheelLightbox";
 
 const FLYWHEEL = [
   { no: 1, title: "고객·상품 설계", desc: "누구의 어떤 문제를 무엇으로 해결할지 정의합니다.", tags: ["타깃 고객", "문제", "상품", "가격"], live: false },
@@ -18,9 +18,8 @@ const FLYWHEEL = [
 
 const AXES = ["🤖 AI와 함께 1인 나홀로 비즈니스", "⚙️ 반복 업무는 AI로 자동화", "📈 콘텐츠가 매출 흐름으로 연결"];
 const FLOW = ["고객·상품", "콘텐츠", "확산", "리드 수집", "신뢰", "판매", "재구매", "개선"];
-const LIVE_NUMBERS = ["②", "③", "④"];
 const LIVE_STEPS = FLYWHEEL.filter((step) => step.live);
-const FLYWHEEL_IMAGE = { src: "/proof/flywheel.webp", alt: "AI 수익화 콘텐츠 커머스 플라이휠 — 고객 설계부터 재구매·개선까지 8단계 순환 구조", width: 1400, height: 788 } as const;
+const FLYWHEEL_IMAGE = { src: "/images/flywheel.png", alt: "AI 1억 수익화 콘텐츠 커머스 플라이휠 8단계 구조도", width: 1672, height: 941 } as const;
 
 function StepCard({ step, compact = false }: { step: (typeof FLYWHEEL)[number]; compact?: boolean }) {
   return (
@@ -45,6 +44,16 @@ export function FlywheelSection() {
     triggerRef.current = event.currentTarget;
     setLightboxOpen(true);
   };
+  const thumbnail = (
+    <figure className="flywheel-thumb-figure">
+      <button data-flywheel-image-button type="button" onClick={openLightbox} aria-label="전체 구조도 크게 보기" className="flywheel-thumb group">
+        {imageFailed ? <span className="flywheel-thumb-fallback">이미지를 불러오지 못했습니다.</span> : <Image src={FLYWHEEL_IMAGE.src} alt={FLYWHEEL_IMAGE.alt} width={FLYWHEEL_IMAGE.width} height={FLYWHEEL_IMAGE.height} sizes="(max-width: 820px) 100vw, 900px" className="h-auto w-full" onError={() => setImageFailed(true)} />}
+        <span className="flywheel-thumb-veil" aria-hidden="true" />
+        <span className="flywheel-thumb-cue" aria-hidden="true">🔍 탭하면 크게 보여요</span>
+      </button>
+      <figcaption className="flywheel-thumb-caption">작게 보여도 괜찮아요. 탭하면 확대됩니다.</figcaption>
+    </figure>
+  );
 
   return (
     <section data-flywheel-section className="bg-[#F5F1E7] py-16 md:py-24">
@@ -58,23 +67,20 @@ export function FlywheelSection() {
         <FadeUp className="mt-10 grid gap-3 md:grid-cols-3">{AXES.map((axis) => <div key={axis} className="rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 text-center text-sm font-bold text-slate-600">{axis}</div>)}</FadeUp>
 
         <div data-desktop-flywheel className="mt-10 hidden lg:block">
-          <FadeUp>
-            <button data-flywheel-image-button type="button" onClick={openLightbox} aria-label="AI 수익화 플라이휠 구조도 크게 보기" className="group relative block aspect-video w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 shadow-sales focus-visible:outline focus-visible:outline-4 focus-visible:outline-danger/60">
-              {imageFailed ? <span className="flex h-full items-center justify-center font-bold text-slate-500">이미지를 불러오지 못했습니다.</span> : <Image src={FLYWHEEL_IMAGE.src} alt={FLYWHEEL_IMAGE.alt} fill sizes="1100px" className="object-cover" onError={() => setImageFailed(true)} />}
-              <span className="absolute bottom-4 right-4 rounded-full bg-black/75 px-4 py-2 text-sm font-black text-white transition-transform group-hover:-translate-y-1 motion-reduce:transform-none motion-reduce:transition-none">🔍 크게 보기</span>
-            </button>
-          </FadeUp>
+          <FadeUp>{thumbnail}</FadeUp>
           <ol className="mt-8 grid grid-cols-3 gap-5">{LIVE_STEPS.map((step) => <StepCard key={step.no} step={step} compact />)}</ol>
         </div>
 
         <div data-mobile-flywheel className="mt-10 lg:hidden">
           <ol className="grid gap-4 md:grid-cols-2">{FLYWHEEL.map((step) => <StepCard key={step.no} step={step} />)}</ol>
-          <button data-flywheel-image-button type="button" onClick={openLightbox} className="mt-7 inline-flex w-full items-center justify-center rounded-xl border-2 border-brand bg-white px-5 py-4 text-base font-black text-brand focus-visible:outline focus-visible:outline-4 focus-visible:outline-danger/60">전체 구조도 크게 보기 →</button>
+          <div className="mt-7">{thumbnail}</div>
         </div>
 
-        <FadeUp className="mt-10 border-l-4 border-brand bg-blue-50 px-5 py-6 md:px-7">
-          <p className="text-lg font-semibold text-slate-700">전체 구조는 위와 같습니다.</p>
-          <p className="mt-4 text-lg font-black leading-9 text-ink">오늘 밤에는, 이 중 {LIVE_NUMBERS.map((number) => <span key={number} className="mx-0.5 inline-flex h-8 w-8 items-center justify-center rounded-full bg-brand text-sm text-white">{number}</span>)} 를 화면 켜고 직접 만들어 보여드립니다.</p>
+        <FadeUp className="flywheel-note mt-10">
+          <p className="flywheel-note-lead">전체 구조는 위 8단계입니다.</p>
+          <p className="flywheel-note-highlight">오늘 밤에는, 이 중 3개를 화면 켜고 직접 만들어 보여드립니다.</p>
+          <div className="flywheel-live-steps">{LIVE_STEPS.map((step) => <span className="flywheel-live-step" key={step.no}><span className="flywheel-live-number">{step.no}</span><span className="flywheel-live-title">{step.title}</span></span>)}</div>
+          <p className="flywheel-note-tail">👉 보여드리는 게 아니라, 그 자리에서 같이 만듭니다.</p>
         </FadeUp>
       </div>
 
@@ -91,7 +97,7 @@ export function FlywheelSection() {
         </FadeUp>
       </div>
 
-      {lightboxOpen ? <ProofLightbox image={FLYWHEEL_IMAGE} onClose={closeLightbox} returnFocus={triggerRef.current} wide /> : null}
+      {lightboxOpen ? <FlywheelLightbox onClose={closeLightbox} returnFocus={triggerRef.current} /> : null}
     </section>
   );
 }
