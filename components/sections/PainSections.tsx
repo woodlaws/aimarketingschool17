@@ -25,7 +25,24 @@ export function WrongUse() {
 }
 
 export function InstructorStory() {
-  return <section className="sales-section bg-brand-dark text-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title">2013년 8월 17일, 첫 강의를 했습니다.<br />그리고 13년이 지났습니다.</h2></FadeUp><FadeUp className="sales-body mt-10 space-y-7 border-l-4 border-accent pl-6 text-slate-300"><p>마케팅 책을 7권 썼고, 강의로 먹고살았습니다.<br />그런데 2023년, AI가 오고 나서 저도 똑같이 헤맸습니다.</p><p>툴을 100개 배웠습니다. ChatGPT, 클로드, 제미나이, 미드저니…<br /><strong className="text-accent">그런데 매출은 그대로였습니다.</strong></p><p>이유는 단순했습니다.<br />저는 <strong className="text-accent">도구를 배웠지, 구조를 만들지 않았습니다.</strong></p><p>그래서 강의를 접고, 마케팅 대행사를 직접 차렸습니다.<br />제 돈, 고객사 돈으로 2년간 검증했습니다.<br />되는 것만 남기고 전부 버렸습니다.</p></FadeUp><FadeUp><p className="mt-14 text-center text-2xl font-black leading-relaxed md:text-4xl">그 남은 것만,<br />9월 18일에 전부 보여드립니다.</p></FadeUp></div></section>;
+  return (
+    <section data-instructor-story className="sales-section bg-brand-dark text-white">
+      <div className="sales-wrap">
+        <FadeUp><h2 className="sales-title">2013년 8월 17일, 첫 강의를 했습니다.<br />그리고 13년이 지났습니다.</h2></FadeUp>
+        <div className="story-body sales-body mt-10 border-l-4 border-accent pl-6 text-slate-300">
+          <FadeUp className="story-paragraph"><p>그동안 플랫폼은 계속 바뀌었습니다.</p></FadeUp>
+          <FadeUp className="story-paragraph"><p>블로그가 전부이던 시절이 있었고,<br />스마트스토어가 답이라던 때가 있었고,<br />인스타가 아니면 안 된다던 때가 있었습니다.</p></FadeUp>
+          <FadeUp className="story-paragraph"><p>그때마다 새로운 도구가 쏟아졌습니다.<br />저는 그때마다 현장에서 확인하고,<br />책으로 정리했습니다. <strong className="story-book-accent">그렇게 7권을 썼습니다.</strong></p></FadeUp>
+          <FadeUp className="story-paragraph story-ai-turn"><p>그리고 2023년, AI가 왔습니다.</p></FadeUp>
+          <FadeUp className="story-paragraph"><p>이번에도 똑같은 질문을 받았습니다.<br /><span className="story-question">&quot;이거 배우면 매출이 오르나요?&quot;</span></p></FadeUp>
+          <FadeUp className="story-paragraph"><p>13년 동안 지켜보며 알게 된 답은 이것입니다.</p></FadeUp>
+          <FadeUp className="story-paragraph story-punch"><p>도구를 바꾼 사람은 그대로였고,<br /><span className="story-punch-conclusion">구조를 만든 사람만 남았습니다.</span></p></FadeUp>
+          <FadeUp className="story-paragraph"><p>그래서 저는 가르치기만 하지 않습니다.<br /><strong className="story-agency-emphasis">2023년부터 마케팅 대행사를 직접 운영하며,</strong><br />제가 가르치는 것을 매일 현장에 적용하고 있습니다.</p></FadeUp>
+        </div>
+        <FadeUp className="story-closing"><p>그 구조를,<br /><strong>9월 18일</strong> 밤에 전부 보여드립니다.</p></FadeUp>
+      </div>
+    </section>
+  );
 }
 
 export function Dissonance() {
