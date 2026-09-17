@@ -1,4 +1,5 @@
 import { FadeUp } from "@/components/Motion";
+import { SESSION } from "@/lib/constants";
 
 const diagnosisQuestions = [
   "이번 달 AI로 만든 콘텐츠가 몇 건의 문의를 만들었나요?",
@@ -34,7 +35,7 @@ export function InstructorStory() {
           <FadeUp className="story-paragraph" delay={0.16}><p>저는 그때마다 현장에서 확인하고<br />책으로 정리했습니다. <strong className="story-book-accent">그렇게 7권.</strong></p></FadeUp>
           <FadeUp className="story-paragraph" delay={0.24}><p>그리고 2023년부터는<br /><strong className="story-agency-emphasis">마케팅 대행사를 직접 운영합니다.</strong><br /><span className="story-daily-accent">가르치는 것을 매일 제 손으로 씁니다.</span></p></FadeUp>
         </div>
-        <FadeUp className="story-closing" delay={0.32}><p><strong>9월 18일</strong>,<br />그 13년을 <strong>2시간 30분</strong>에 압축해 드립니다.</p><a href="#apply" className="story-cta primary-cta">무료특강 신청하기 →</a></FadeUp>
+        <FadeUp className="story-closing" delay={0.32}><p><strong>{SESSION.monthDayLabel}</strong>,<br />그 13년을 <strong>2시간 30분</strong>에 압축해 드립니다.</p><a href="#apply" className="story-cta primary-cta">무료특강 신청하기 →</a></FadeUp>
       </div>
     </section>
   );

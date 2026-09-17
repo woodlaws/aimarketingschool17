@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { SESSION } from "@/lib/constants";
 
 type Step = "form" | "questions" | "done";
 type Lead = { name: string; phone: string; email: string };
@@ -29,7 +30,7 @@ const SOURCE_MAP: Record<string, string> = {
   kakao: "카카오톡", threads: "스레드", youtube: "유튜브", email: "이메일",
 };
 const UTM_STORAGE_KEY = "aims17_utm_source";
-const EVENT_OPTION = "9/18(금) 저녁 8시~10시30분";
+const EVENT_OPTION = SESSION.formOption;
 
 // 구글폼 변경 시 여기만 수정
 const FORM_ENDPOINT = "https://docs.google.com/forms/d/e/1FAIpQLSeZTe5bwfGdckyQYrDqlwmcpYgH4vRW13P7nPsHk_hgkrNo-g/formResponse";
@@ -190,7 +191,7 @@ export function ApplyForm() {
             <div className="text-center">
               <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand text-2xl text-white">✓</div>
               <h3 className="mt-5 text-2xl font-black text-brand">신청이 완료되었습니다.</h3>
-              <p className="mt-3 leading-7 text-slate-600">9월 18일(금) 저녁 8시, 문자로 줌 링크를 보내드립니다.</p>
+              <p className="mt-3 leading-7 text-slate-600">{SESSION.dateWithWeekday} {SESSION.formTimeLabel}, 문자로 줌 링크를 보내드립니다.</p>
             </div>
             <div className="my-8 border-t border-slate-200" />
             <div className="mb-7 text-center"><h4 className="text-lg font-black text-slate-900">30초만 더 주시면, 특강 내용을 맞춰서 준비하겠습니다.</h4><p className="mt-2 text-sm text-muted">안 하셔도 신청은 이미 완료되었습니다.</p></div>
@@ -214,7 +215,7 @@ export function ApplyForm() {
         ) : (
           <motion.div key="done" initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={transition} className="py-8 text-center">
             <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand text-2xl text-white">✓</div>
-            <h3 className="mt-5 text-2xl font-black">감사합니다. 9월 18일에 뵙겠습니다.</h3>
+            <h3 className="mt-5 text-2xl font-black">감사합니다. {SESSION.monthDayLabel}에 뵙겠습니다.</h3>
           </motion.div>
         )}
       </AnimatePresence>

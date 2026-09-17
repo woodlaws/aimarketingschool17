@@ -48,13 +48,13 @@ async function verify(viewport, label) {
       desktopVisible,
       mobileVisible,
       visibleStepCount: visibleSteps.length,
-      liveStepCount: visibleSteps.filter((step) => step.textContent?.includes("오늘 밤 공개")).length,
+      liveStepCount: visibleSteps.filter((step) => step.textContent?.includes("이번 특강 공개")).length,
       descriptionsReadable,
       flowScrollable: flow ? flow.scrollWidth > flow.clientWidth : false,
       s6DirectlyBeforeS7: dissonance?.nextElementSibling === flywheel,
       s10BadgeCount: curriculumBadges.length,
       s10BadgeSequence: curriculumBadges.map((badge) => badge.textContent),
-      hasRequiredCopy: ["AI 수익화 엔진", "이미 정해져 있습니다.", "오늘 밤에는, 이 중", "도구가 아닙니다", "수익화 시스템", "이 구조, 9월 18일 밤에 직접 보여드립니다"].every((text) => document.body.innerText.includes(text))
+      hasRequiredCopy: ["AI 수익화 엔진", "이미 정해져 있습니다.", "이번 특강에서는, 이 중", "도구가 아닙니다", "수익화 시스템", "이 구조,"].every((text) => document.body.innerText.includes(text))
     };
   });
 

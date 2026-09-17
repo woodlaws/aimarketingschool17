@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { SESSION } from "@/lib/constants";
 
 type Remaining = { days: number; hours: number; minutes: number; seconds: number } | null;
-const TARGET = new Date("2026-09-18T20:00:00+09:00").getTime();
+const TARGET = new Date(SESSION.startsAtISO).getTime();
 
 export function Countdown() {
   const [remaining, setRemaining] = useState<Remaining>(null);

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback, useRef, useState, type MouseEvent } from "react";
 import { FadeUp } from "@/components/Motion";
 import { FlywheelLightbox } from "@/components/FlywheelLightbox";
+import { SESSION } from "@/lib/constants";
 
 const FLYWHEEL = [
   { no: 1, title: "고객·상품 설계", desc: "누구의 어떤 문제를 무엇으로 해결할지 정의합니다.", tags: ["타깃 고객", "문제", "상품", "가격"], live: false },
@@ -24,7 +25,7 @@ const FLYWHEEL_IMAGE = { src: "/images/flywheel.png", alt: "AI 1억 수익화 �
 function StepCard({ step, compact = false }: { step: (typeof FLYWHEEL)[number]; compact?: boolean }) {
   return (
     <li data-flywheel-step={step.no} className={`flywheel-card flex min-w-0 flex-col rounded-2xl bg-white ${step.live ? "border-2 border-brand shadow-lg" : "border border-slate-200 opacity-90"} ${compact ? "p-5" : "p-6"}`}>
-      {step.live ? <div className="mb-3 flex justify-end"><span className="flywheel-pill rounded-full bg-brand px-3 py-1.5 font-black text-white">오늘 밤 공개</span></div> : null}
+      {step.live ? <div className="mb-3 flex justify-end"><span className="flywheel-pill rounded-full bg-brand px-3 py-1.5 font-black text-white">이번 특강 공개</span></div> : null}
       <div className="flex min-w-0 items-center gap-3">
         <span className={`flywheel-num flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-black ${step.live ? "bg-brand text-white" : "bg-slate-100 text-slate-600"}`}>{String(step.no).padStart(2, "0")}</span>
         <h3 className="flywheel-title min-w-0 flex-1 font-black text-ink">{step.title}</h3>
@@ -78,7 +79,7 @@ export function FlywheelSection() {
 
         <FadeUp className="flywheel-note mt-10">
           <p className="flywheel-note-lead">전체 구조는 위 8단계입니다.</p>
-          <p className="flywheel-note-highlight">오늘 밤에는, 이 중 3개를 화면 켜고 직접 만들어 보여드립니다.</p>
+          <p className="flywheel-note-highlight">이번 특강에서는, 이 중 3개를 화면 켜고 직접 만들어 보여드립니다.</p>
           <div className="flywheel-live-steps">{LIVE_STEPS.map((step) => <span className="flywheel-live-step" key={step.no}><span className="flywheel-live-number">{step.no}</span><span className="flywheel-live-title">{step.title}</span></span>)}</div>
           <p className="flywheel-note-tail">👉 보여드리는 게 아니라, 그 자리에서 같이 만듭니다.</p>
         </FadeUp>
@@ -92,7 +93,7 @@ export function FlywheelSection() {
       <div className="mx-auto mt-8 w-full max-w-[1100px] px-5 md:px-8 lg:px-0">
         <div data-flywheel-flow className="no-scrollbar overflow-x-auto pb-3"><div className="mx-auto flex min-w-max items-center justify-center gap-2 text-sm font-bold text-slate-500">{FLOW.map((label, index) => <div key={label} className="flex items-center gap-2"><span className={index >= 1 && index <= 3 ? "text-brand" : ""}>{label}</span>{index < FLOW.length - 1 ? <span aria-hidden="true" className="text-slate-300">→</span> : null}</div>)}</div></div>
         <FadeUp className="mt-9 text-center">
-          <p className="text-xl font-black text-ink md:text-2xl">이 구조, 9월 18일 밤에 직접 보여드립니다</p>
+          <p className="text-xl font-black text-ink md:text-2xl">이 구조, {SESSION.monthDayLabel} {SESSION.timeLabel}에 직접 보여드립니다</p>
           <a href="#apply" className="primary-cta mt-6 inline-flex w-full max-w-[520px] items-center justify-between rounded-xl bg-brand px-6 py-5 font-black text-white shadow-lg transition hover:bg-blue-700 motion-reduce:transition-none">무료특강 신청하기 <span>→</span></a>
         </FadeUp>
       </div>
