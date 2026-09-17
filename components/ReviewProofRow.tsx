@@ -5,6 +5,9 @@ import { useCallback, useRef, useState } from "react";
 import { FadeUp } from "@/components/Motion";
 import { ProofLightbox } from "@/components/ProofLightbox";
 
+export const CAFE_REVIEW_URL =
+  "https://cafe.naver.com/ArticleList.nhn?search.clubid=12162886&search.menuid=149&search.boardtype=L";
+
 type ReviewItem = {
   id: number;
   src: string;
@@ -222,7 +225,7 @@ export function ReviewProofRow() {
         <div className="mt-14 bg-brand-dark px-5 py-12 text-center text-white md:mt-20 md:px-8 md:py-16">
           <FadeUp><p className="text-xl font-bold leading-snug md:text-3xl">후기를 만들어 드린 게 아닙니다.</p></FadeUp>
           <FadeUp delay={0.4}><p className="mt-7 text-2xl font-black leading-snug text-accent md:text-4xl">카페에 가면, 지금도 계속 올라오고 있습니다.</p></FadeUp>
-          <a href="https://cafe.naver.com/shopmanagement" target="_blank" rel="noopener noreferrer" className="mt-9 inline-flex rounded-full bg-white px-6 py-3 text-base font-black text-brand-dark hover:bg-accent">거상스쿨 카페에서 직접 보기 ↗</a>
+          <a href={CAFE_REVIEW_URL} target="_blank" rel="noopener noreferrer" className="mt-9 inline-flex min-h-12 items-center rounded-full bg-white px-6 py-3 text-base font-black text-brand-dark hover:bg-accent">거상스쿨 카페에서 직접 보기 ↗</a>
         </div>
       </div>
 
