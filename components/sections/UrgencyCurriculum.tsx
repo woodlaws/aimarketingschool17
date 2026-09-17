@@ -7,7 +7,7 @@ const fears = [
 ];
 
 export function Fear() {
-  return <section className="sales-section bg-brand-dark text-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title">지금 안 바꾸면,<br />1년 뒤에도 똑같습니다.</h2></FadeUp><div className="mt-12 space-y-8">{fears.map(([title,body],i)=><FadeUp key={title} delay={i*.08}><article className="border-l-4 border-danger pl-6"><span className="font-black text-red-400">0{i+1}</span><h3 className="mt-2 text-2xl font-black">{title}</h3><p className="sales-body mt-3 text-slate-300">{body}</p></article></FadeUp>)}</div><FadeUp><p className="mt-16 text-center text-3xl font-black leading-relaxed text-red-500 md:text-5xl">정확히 똑같이,<br />1년을 더 보내실 건가요?</p></FadeUp></div></section>;
+  return <section className="sales-section bg-white text-ink"><div className="sales-wrap"><FadeUp><h2 className="sales-title">지금 안 바꾸면,<br />1년 뒤에도 똑같습니다.</h2></FadeUp><div className="mt-12 space-y-8">{fears.map(([title,body],i)=><FadeUp key={title} delay={i*.08}><article className="border-l-4 border-danger pl-6"><span className="font-black text-red-600">0{i+1}</span><h3 className="mt-2 text-2xl font-black">{title}</h3><p className="sales-body mt-3 text-slate-700">{body}</p></article></FadeUp>)}</div><FadeUp><p className="mt-16 text-center text-3xl font-black leading-relaxed text-red-600 md:text-5xl">정확히 똑같이,<br />1년을 더 보내실 건가요?</p></FadeUp></div></section>;
 }
 
 const curriculum = [
@@ -19,7 +19,7 @@ const curriculum = [
 ];
 
 export function Curriculum() {
-  return <section className="sales-section bg-surface"><div className="sales-wrap"><FadeUp><h2 className="sales-title">2시간 30분,<br />이 5개를 화면 켜고 만들어 보여드립니다.</h2></FadeUp><div className="mt-12 divide-y divide-slate-200 border-y border-slate-300">{curriculum.map(({stage,title,sub},i)=><FadeUp key={title}><article className="grid grid-cols-[3.5rem_1fr] gap-3 py-6 md:grid-cols-[5rem_1fr]"><div><span className="text-3xl font-black text-brand md:text-4xl">{String(i+1).padStart(2,"0")}</span><span className="mt-2 flex h-7 w-7 items-center justify-center rounded-full bg-brand text-xs font-black text-white" aria-label={"플라이휠 " + stage + " 단계"}>{stage}</span></div><div><h3 className="text-lg font-extrabold md:text-xl">{title}</h3><p className="mt-2 leading-7 text-muted">{sub}</p></div></article></FadeUp>)}</div><FadeUp><p className="mt-12 text-center text-2xl font-black leading-relaxed md:text-4xl">설명하지 않습니다.<br />화면 켜고, 만들어서 보여드립니다.</p></FadeUp></div></section>;
+  return <section className="sales-section bg-brand-dark text-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title">2시간 30분,<br />이 5개를 화면 켜고 만들어 보여드립니다.</h2></FadeUp><div className="mt-12 divide-y divide-slate-700 border-y border-slate-600">{curriculum.map(({stage,title,sub},i)=><FadeUp key={title}><article className="grid grid-cols-[3.5rem_1fr] gap-3 py-6 md:grid-cols-[5rem_1fr]"><div><span className="text-3xl font-black text-accent md:text-4xl">{String(i+1).padStart(2,"0")}</span><span className="mt-2 flex h-7 w-7 items-center justify-center rounded-full bg-brand text-xs font-black text-white" aria-label={"플라이휠 " + stage + " 단계"}>{stage}</span></div><div><h3 className="text-lg font-extrabold md:text-xl">{title}</h3><p className="mt-2 leading-7 text-slate-300">{sub}</p></div></article></FadeUp>)}</div><FadeUp><p className="mt-12 text-center text-2xl font-black leading-relaxed md:text-4xl">설명하지 않습니다.<br />화면 켜고, 만들어서 보여드립니다.</p></FadeUp></div></section>;
 }
 
 const comparison = [

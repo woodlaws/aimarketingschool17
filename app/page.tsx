@@ -13,10 +13,10 @@ export default function Home() {
       <TrustBar />
       <Diagnosis />
       <WrongUse />
-      <InstructorStory />
       <Dissonance />
       <FlywheelSection />
       <Proof />
+      <InstructorStory />
       <Fear />
       <Curriculum />
       <Comparison />

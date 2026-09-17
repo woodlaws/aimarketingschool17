@@ -28,18 +28,13 @@ export function InstructorStory() {
   return (
     <section data-instructor-story className="sales-section bg-brand-dark text-white">
       <div className="sales-wrap">
-        <FadeUp><h2 className="sales-title">2013년 8월 17일, 첫 강의를 했습니다.<br />그리고 13년이 지났습니다.</h2></FadeUp>
+        <FadeUp><h2 className="sales-title">2013년 8월 17일, 첫 강의.<br />그리고 13년.</h2></FadeUp>
         <div className="story-body sales-body mt-10 border-l-4 border-accent pl-6 text-slate-300">
-          <FadeUp className="story-paragraph"><p>그동안 플랫폼은 계속 바뀌었습니다.</p></FadeUp>
-          <FadeUp className="story-paragraph"><p>블로그가 전부이던 시절이 있었고,<br />스마트스토어가 답이라던 때가 있었고,<br />인스타가 아니면 안 된다던 때가 있었습니다.</p></FadeUp>
-          <FadeUp className="story-paragraph"><p>그때마다 새로운 도구가 쏟아졌습니다.<br />저는 그때마다 현장에서 확인하고,<br />책으로 정리했습니다. <strong className="story-book-accent">그렇게 7권을 썼습니다.</strong></p></FadeUp>
-          <FadeUp className="story-paragraph story-ai-turn"><p>그리고 2023년, AI가 왔습니다.</p></FadeUp>
-          <FadeUp className="story-paragraph"><p>이번에도 똑같은 질문을 받았습니다.<br /><span className="story-question">&quot;이거 배우면 매출이 오르나요?&quot;</span></p></FadeUp>
-          <FadeUp className="story-paragraph"><p>13년 동안 지켜보며 알게 된 답은 이것입니다.</p></FadeUp>
-          <FadeUp className="story-paragraph story-punch"><p>도구를 바꾼 사람은 그대로였고,<br /><span className="story-punch-conclusion">구조를 만든 사람만 남았습니다.</span></p></FadeUp>
-          <FadeUp className="story-paragraph"><p>그래서 저는 가르치기만 하지 않습니다.<br /><strong className="story-agency-emphasis">2023년부터 마케팅 대행사를 직접 운영하며,</strong><br />제가 가르치는 것을 매일 현장에 적용하고 있습니다.</p></FadeUp>
+          <FadeUp className="story-paragraph" delay={0.08}><p>블로그, 스마트스토어, 인스타, 그리고 AI.<br />유행은 계속 바뀌었습니다.</p></FadeUp>
+          <FadeUp className="story-paragraph" delay={0.16}><p>저는 그때마다 현장에서 확인하고<br />책으로 정리했습니다. <strong className="story-book-accent">그렇게 7권.</strong></p></FadeUp>
+          <FadeUp className="story-paragraph" delay={0.24}><p>그리고 2023년부터는<br /><strong className="story-agency-emphasis">마케팅 대행사를 직접 운영합니다.</strong><br /><span className="story-daily-accent">가르치는 것을 매일 제 손으로 씁니다.</span></p></FadeUp>
         </div>
-        <FadeUp className="story-closing"><p>그 구조를,<br /><strong>9월 18일</strong> 밤에 전부 보여드립니다.</p></FadeUp>
+        <FadeUp className="story-closing" delay={0.32}><p><strong>9월 18일</strong>,<br />그 13년을 <strong>2시간 30분</strong>에 압축해 드립니다.</p><a href="#apply" className="story-cta primary-cta">무료특강 신청하기 →</a></FadeUp>
       </div>
     </section>
   );
