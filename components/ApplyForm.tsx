@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { SESSION } from "@/lib/constants";
 
@@ -95,6 +95,8 @@ export function ApplyForm() {
   const [insta, setInsta] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const isSubmittingRef = useRef(false);
+  const leadEventIdRef = useRef<string | null>(null);
 
   useEffect(() => {
     try {
@@ -103,51 +105,56 @@ export function ApplyForm() {
     } catch { /* 저장소 차단 시에도 직접 접속(기타)으로 제출합니다. */ }
   }, []);
 
-  async function submitLead(event: FormEvent<HTMLFormElement>) {
+  function submitLead(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (submitting) return;
     const form = event.currentTarget;
     if (!form.reportValidity()) return;
     const trimmedLead = { ...lead, name: lead.name.trim(), email: lead.email.trim() };
     if (!trimmedLead.name) { setError("성함을 입력해 주세요."); return; }
-    setSubmitting(true); setError("");
-    try {
-      await submitToGoogleForm({
-        "entry.694594280": trimmedLead.name,
-        "entry.357585861": trimmedLead.phone,
-        "entry.541062845": trimmedLead.email,
-        "entry.683816447": "동의합니다",
-        "entry.1471197970": EVENT_OPTION,
-        "entry.21398181": getSourceFromSession(),
-      });
-      setLead(trimmedLead);
-      const trackedWindow = window as typeof window & { fbq?: (...args: unknown[]) => void };
-      if (typeof trackedWindow.fbq === "function") trackedWindow.fbq("track", "Lead");
-      setStep("questions");
-    } catch {
-      setError("네트워크 연결을 확인한 뒤 다시 시도해 주세요. 입력한 내용은 그대로 유지됩니다.");
-    } finally { setSubmitting(false); }
+    setError("");
+    setLead(trimmedLead);
+    setStep("questions");
   }
 
-  async function submitQuestions(event: FormEvent<HTMLFormElement>) {
+  async function submitFinal(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (submitting || (!job && !pain && !want)) return;
+    if (isSubmittingRef.current) return;
+    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLElement | null;
+    const skipQuestions = submitter?.dataset.skipQuestions === "true";
+    if (!skipQuestions && !job && !pain && !want) return;
+    isSubmittingRef.current = true;
     setSubmitting(true); setError("");
+    const fields: Record<string, string> = {
+      "entry.694594280": lead.name,
+      "entry.357585861": lead.phone,
+      "entry.541062845": lead.email,
+      "entry.683816447": "동의합니다",
+      "entry.1471197970": EVENT_OPTION,
+      "entry.21398181": getSourceFromSession(),
+    };
+    if (!skipQuestions) {
+      fields["entry.733759544"] = job;
+      fields["entry.846365700"] = pain;
+      fields["entry.549374384"] = want;
+      fields["entry.1241076136"] = insta.trim();
+    }
     try {
-      await submitToGoogleForm({
-        "entry.694594280": lead.name,
-        "entry.357585861": lead.phone,
-        "entry.541062845": lead.email,
-        "entry.683816447": "동의합니다",
-        "entry.1471197970": EVENT_OPTION,
-        "entry.733759544": job,
-        "entry.846365700": pain,
-        "entry.549374384": want,
-        "entry.1241076136": insta.trim(),
-      });
-      setStep("done");
-    } catch { setError("추가 답변을 보내지 못했습니다. 다시 시도하거나 건너뛰어 주세요."); }
-    finally { setSubmitting(false); }
+      await submitToGoogleForm(fields);
+    } catch {
+      // 네트워크 예외에서도 요청이 서버에 도착했을 수 있으므로 재전송하지 않습니다.
+    }
+    // no-cors 응답은 확인할 수 없으며, 완료 처리와 Lead 이벤트는 한 지점에서만 실행합니다.
+    const trackedWindow = window as typeof window & { fbq?: (...args: unknown[]) => void };
+    leadEventIdRef.current ??= typeof crypto.randomUUID === "function"
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    try {
+      if (typeof trackedWindow.fbq === "function") {
+        trackedWindow.fbq("track", "Lead", {}, { eventID: leadEventIdRef.current });
+      }
+    } catch { /* 픽셀 오류가 신청 완료 화면을 막지 않도록 합니다. */ }
+    setStep("done");
+    setSubmitting(false);
   }
 
   const hasExtraAnswer = Boolean(job || pain || want);
@@ -156,7 +163,7 @@ export function ApplyForm() {
   return (
     <div className="form-panel mx-auto w-full max-w-3xl overflow-hidden rounded-2xl bg-white p-6 shadow-sales md:p-9">
       <p className="sr-only" aria-live="polite">
-        {submitting ? "전송 중입니다." : step === "questions" ? "신청이 완료되었습니다. 추가 질문 단계입니다." : step === "done" ? "모든 절차가 완료되었습니다." : error}
+        {submitting ? "전송 중입니다." : step === "questions" ? "추가 질문 단계입니다. 아직 신청이 전송되지 않았습니다." : step === "done" ? "신청이 완료되었습니다." : error}
       </p>
       <AnimatePresence mode="wait" initial={false}>
         {step === "form" ? (
@@ -181,21 +188,20 @@ export function ApplyForm() {
               </details>
             </div>
             {error ? <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm font-bold text-danger">{error}</p> : null}
-            <button type="submit" disabled={submitting} className="flex w-full items-center justify-center gap-3 rounded-xl bg-brand px-6 py-5 text-lg font-black text-white transition hover:bg-blue-600 disabled:cursor-wait disabled:opacity-70 motion-reduce:transition-none">
-              {submitting ? <><span aria-hidden="true" className="size-5 animate-spin rounded-full border-2 border-white/30 border-t-white motion-reduce:animate-none" />제출 중</> : <>무료특강 자리 맡기 <span aria-hidden="true">→</span></>}
+            <button type="submit" className="flex w-full items-center justify-center gap-3 rounded-xl bg-brand px-6 py-5 text-lg font-black text-white transition hover:bg-blue-600 motion-reduce:transition-none">
+              추가 질문으로 <span aria-hidden="true">→</span>
             </button>
             <p className="text-center text-xs leading-6 text-muted">결제 정보를 요구하지 않습니다. 광고성 문자는 언제든 수신거부 가능합니다.</p>
           </motion.form>
         ) : step === "questions" ? (
           <motion.div key="questions" initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={reduceMotion ? undefined : { opacity: 0 }} transition={transition}>
             <div className="text-center">
-              <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand text-2xl text-white">✓</div>
-              <h3 className="mt-5 text-2xl font-black text-brand">신청이 완료되었습니다.</h3>
-              <p className="mt-3 leading-7 text-slate-600">{SESSION.dateWithWeekday} {SESSION.formTimeLabel}, 문자로 줌 링크를 보내드립니다.</p>
+              <h3 className="mt-5 text-2xl font-black text-brand">마지막 단계입니다.</h3>
+              <p className="mt-3 leading-7 text-slate-600">추가 질문을 보내거나 건너뛰면 신청이 완료됩니다.</p>
             </div>
             <div className="my-8 border-t border-slate-200" />
-            <div className="mb-7 text-center"><h4 className="text-lg font-black text-slate-900">30초만 더 주시면, 특강 내용을 맞춰서 준비하겠습니다.</h4><p className="mt-2 text-sm text-muted">안 하셔도 신청은 이미 완료되었습니다.</p></div>
-            <form onSubmit={submitQuestions} className="space-y-7">
+            <div className="mb-7 text-center"><h4 className="text-lg font-black text-slate-900">30초만 더 주시면, 특강 내용을 맞춰서 준비하겠습니다.</h4><p className="mt-2 text-sm text-muted">추가 질문은 선택입니다. 어느 버튼을 눌러도 신청 정보가 한 번만 전송됩니다.</p></div>
+            <form onSubmit={submitFinal} className="space-y-7">
               <RadioCards legend="Q1. 하시는 일은?" name="job" options={JOBS} value={job} onChange={setJob} />
               <RadioCards legend="Q2. 지금 가장 어려운 것은?" name="pain" options={PAINS} value={pain} onChange={setPain} />
               <RadioCards legend="Q3. 특강에서 가장 듣고 싶은 것은?" name="want" options={WANTS} value={want} onChange={setWant} />
@@ -207,15 +213,17 @@ export function ApplyForm() {
               ) : null}</AnimatePresence>
               {error ? <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm font-bold text-danger">{error}</p> : null}
               <button type="submit" disabled={submitting || !hasExtraAnswer} className="flex w-full items-center justify-center gap-3 rounded-xl bg-brand px-6 py-4 font-black text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40 motion-reduce:transition-none">
-                {submitting ? <><span aria-hidden="true" className="size-5 animate-spin rounded-full border-2 border-white/30 border-t-white motion-reduce:animate-none" />전송 중</> : "보내기"}
+                {submitting ? <><span aria-hidden="true" className="size-5 animate-spin rounded-full border-2 border-white/30 border-t-white motion-reduce:animate-none" />전송 중</> : "보내고 신청 완료하기"}
               </button>
-              <button type="button" onClick={() => setStep("done")} disabled={submitting} className="mx-auto block min-h-12 px-4 text-sm text-muted underline underline-offset-4 disabled:opacity-50">건너뛰기</button>
+              <button type="submit" data-skip-questions="true" disabled={submitting} className="mx-auto block min-h-12 px-4 text-sm text-muted underline underline-offset-4 disabled:opacity-50">건너뛰고 신청 완료하기</button>
             </form>
           </motion.div>
         ) : (
           <motion.div key="done" initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={transition} className="py-8 text-center">
             <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand text-2xl text-white">✓</div>
-            <h3 className="mt-5 text-2xl font-black">감사합니다. {SESSION.monthDayLabel}에 뵙겠습니다.</h3>
+            <h3 className="mt-5 text-2xl font-black text-brand">신청이 완료되었습니다.</h3>
+            <p className="mt-3 leading-7 text-slate-600">{SESSION.dateWithWeekday} {SESSION.formTimeLabel}, 문자로 줌 링크를 보내드립니다.</p>
+            <p className="mt-5 font-bold">감사합니다. {SESSION.monthDayLabel}에 뵙겠습니다.</p>
           </motion.div>
         )}
       </AnimatePresence>
