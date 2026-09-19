@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { SESSION } from "@/lib/constants";
+import { getActiveSession, getSelectableSessions, type SessionInfo } from "@/lib/constants";
 
 type Step = "form" | "questions" | "done";
 type Lead = { name: string; phone: string; email: string };
@@ -30,7 +30,6 @@ const SOURCE_MAP: Record<string, string> = {
   kakao: "카카오톡", threads: "스레드", youtube: "유튜브", email: "이메일",
 };
 const UTM_STORAGE_KEY = "aims17_utm_source";
-const EVENT_OPTION = SESSION.formOption;
 
 // 구글폼 변경 시 여기만 수정
 const FORM_ENDPOINT = "https://docs.google.com/forms/d/e/1FAIpQLSeZTe5bwfGdckyQYrDqlwmcpYgH4vRW13P7nPsHk_hgkrNo-g/formResponse";
@@ -60,8 +59,8 @@ function getSourceFromSession() {
   } catch { return "기타"; }
 }
 
-function RadioCards({ legend, name, options, value, onChange }: {
-  legend: string; name: string; options: readonly string[]; value: string; onChange: (value: string) => void;
+function RadioCards({ legend, name, options, value, onChange, large = false, required = false }: {
+  legend: string; name: string; options: readonly string[]; value: string; onChange: (value: string) => void; large?: boolean; required?: boolean;
 }) {
   return (
     <fieldset>
@@ -71,8 +70,8 @@ function RadioCards({ legend, name, options, value, onChange }: {
           const id = `${name}-${option}`;
           return (
             <div key={option} className="relative">
-              <input id={id} name={name} type="radio" value={option} checked={value === option} onChange={() => onChange(option)} className="peer sr-only" />
-              <label htmlFor={id} className="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm leading-6 text-slate-700 transition hover:border-blue-300 peer-checked:border-2 peer-checked:border-brand peer-checked:bg-blue-50 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand motion-reduce:transition-none">
+              <input id={id} name={name} type="radio" value={option} checked={value === option} onChange={() => onChange(option)} required={required} className="peer sr-only" />
+              <label htmlFor={id} className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 ${large ? "text-lg leading-7" : "text-sm leading-6"} text-slate-700 transition hover:border-blue-300 peer-checked:border-2 peer-checked:border-brand peer-checked:bg-blue-50 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand motion-reduce:transition-none`}>
                 <span aria-hidden="true" className={`flex size-5 shrink-0 items-center justify-center rounded-full border text-xs font-black ${value === option ? "border-brand bg-brand text-white" : "border-slate-300 text-transparent"}`}>✓</span>
                 <span>{option}</span>
               </label>
@@ -88,6 +87,10 @@ export function ApplyForm() {
   const reduceMotion = useReducedMotion();
   const [step, setStep] = useState<Step>("form");
   const [lead, setLead] = useState<Lead>({ name: "", phone: "", email: "" });
+  // 마운트 시점 기준 회차 목록. 선택 기본값은 가장 임박한 회차(활성 회차).
+  const [sessions] = useState<readonly SessionInfo[]>(() => getSelectableSessions());
+  const [session, setSession] = useState<SessionInfo>(() => getActiveSession());
+  const noOpenSession = sessions.length === 0;
   const [agree, setAgree] = useState(false);
   const [job, setJob] = useState("");
   const [pain, setPain] = useState("");
@@ -129,7 +132,7 @@ export function ApplyForm() {
       "entry.357585861": lead.phone,
       "entry.541062845": lead.email,
       "entry.683816447": "동의합니다",
-      "entry.1471197970": EVENT_OPTION,
+      "entry.1471197970": session.formOption,
       "entry.21398181": getSourceFromSession(),
     };
     if (!skipQuestions) {
@@ -177,6 +180,13 @@ export function ApplyForm() {
             <label className="block font-bold">이메일 <span className="text-danger">*</span>
               <input name="email" value={lead.email} onChange={(event) => setLead((current) => ({ ...current, email: event.target.value }))} type="email" required autoComplete="email" className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-4 text-base outline-none focus:border-brand focus:ring-2 focus:ring-blue-100" placeholder="example@email.com" />
             </label>
+            {sessions.length > 1 ? (
+              <RadioCards legend="참석 희망 회차" name="session" large required options={sessions.map((item) => item.formOption)} value={session.formOption} onChange={(option) => { const picked = sessions.find((item) => item.formOption === option); if (picked) setSession(picked); }} />
+            ) : (
+              <p className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-lg font-bold leading-7 text-slate-700">
+                {noOpenSession ? "현재 모집 중인 회차가 없습니다. 신청하시면 다음 회차 일정을 문자로 안내드립니다." : `${session.formOption} 참석`}
+              </p>
+            )}
             <div className="text-sm leading-6 text-slate-600">
               <div className="flex items-start gap-3">
                 <input id="agree" name="agree" type="checkbox" checked={agree} onChange={(event) => setAgree(event.target.checked)} required className="mt-1 size-5 shrink-0 accent-brand" />
@@ -222,8 +232,14 @@ export function ApplyForm() {
           <motion.div key="done" initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={transition} className="py-8 text-center">
             <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand text-2xl text-white">✓</div>
             <h3 className="mt-5 text-2xl font-black text-brand">신청이 완료되었습니다.</h3>
-            <p className="mt-3 leading-7 text-slate-600">{SESSION.dateWithWeekday} {SESSION.formTimeLabel}, 문자로 줌 링크를 보내드립니다.</p>
-            <p className="mt-5 font-bold">감사합니다. {SESSION.monthDayLabel}에 뵙겠습니다.</p>
+            {noOpenSession ? (
+              <p className="mt-3 leading-7 text-slate-600">다음 회차 일정이 확정되면 문자로 줌 링크를 보내드립니다.</p>
+            ) : (
+              <>
+                <p className="mt-3 leading-7 text-slate-600">{session.dateWithWeekday} {session.formTimeLabel}, 문자로 줌 링크를 보내드립니다.</p>
+                <p className="mt-5 font-bold">감사합니다. {session.monthDayLabel}에 뵙겠습니다.</p>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

@@ -29,13 +29,6 @@ const freeClassReviews: readonly ReviewItem[] = [
     highlights: ["환갑이 지난 나이", "바로 AI마케팅스쿨 16기에 수강신청했습니다"]
   },
   {
-    id: 2, src: "/proof/reviews/review-02.png", width: 575, height: 440,
-    alt: "거상스쿨 네이버 카페 수강 후기 — 70대도 자신감을 갖게 한 무료특강",
-    author: "멘토스쿨", label: "무료특강 후기",
-    quote: "70대도 자신감을 갖게 한 명품 특강이었습니다.\n남들한테는 늘 AI를 반드시 익혀야 한다고 하면서 정작 저는 미루기만 하다가,\n어제 특강을 듣는 순간 진작 익히지 못한 걸 후회했습니다.",
-    highlights: ["70대도 자신감을 갖게 한 명품 특강"]
-  },
-  {
     id: 3, src: "/proof/reviews/review-03.png", width: 603, height: 340,
     alt: "거상스쿨 네이버 카페 수강 후기 — 코딩 없이 자동화를 본 무료특강 후기",
     author: "마인드캔버스", label: "무료특강 후기",
