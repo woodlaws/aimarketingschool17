@@ -30,18 +30,23 @@ export const metadata: Metadata = {
   },
 };
 
+// 메타 픽셀 ID. 변경 시 여기만 수정합니다.
+const META_PIXEL_ID = "982117705203167";
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const pixelId = process.env.NEXT_PUBLIC_META_PIXEL_ID;
   return (
     <html lang="ko">
       <head>
         <link rel="preload" href="/fonts/pretendard-variable.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       </head>
       <body>
+        {/* Meta Pixel 베이스 코드 (PageView 포함) */}
+        <Script id="meta-pixel" strategy="afterInteractive">{`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`}</Script>
+        <noscript>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img height="1" width="1" style={{ display: "none" }} alt="" src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`} />
+        </noscript>
         {children}
-        {pixelId ? (
-          <Script id="meta-pixel" strategy="afterInteractive">{`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${pixelId}');fbq('track','PageView');`}</Script>
-        ) : null}
       </body>
     </html>
   );
