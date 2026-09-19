@@ -143,21 +143,26 @@ export function ApplyForm() {
     }
     try {
       await submitToGoogleForm(fields);
+      // 저장 요청이 성공적으로 끝난 직후에만 Lead 이벤트를 보냅니다. (no-cors라 응답 본문은 볼 수 없지만
+      // fetch가 예외 없이 완료된 것을 저장 성공으로 간주합니다.) eventID로 중복 전송을 막습니다.
+      trackLead();
     } catch {
-      // 네트워크 예외에서도 요청이 서버에 도착했을 수 있으므로 재전송하지 않습니다.
+      // 네트워크 예외에서도 요청이 서버에 도착했을 수 있으므로 재전송하지 않습니다. 이 경우 Lead는 보내지 않습니다.
     }
-    // no-cors 응답은 확인할 수 없으며, 완료 처리와 Lead 이벤트는 한 지점에서만 실행합니다.
+    setStep("done");
+    setSubmitting(false);
+  }
+
+  function trackLead() {
     const trackedWindow = window as typeof window & { fbq?: (...args: unknown[]) => void };
     leadEventIdRef.current ??= typeof crypto.randomUUID === "function"
       ? crypto.randomUUID()
       : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     try {
       if (typeof trackedWindow.fbq === "function") {
-        trackedWindow.fbq("track", "Lead", {}, { eventID: leadEventIdRef.current });
+        trackedWindow.fbq("track", "Lead", { content_name: "17기_무료특강", value: 0, currency: "KRW" }, { eventID: leadEventIdRef.current });
       }
     } catch { /* 픽셀 오류가 신청 완료 화면을 막지 않도록 합니다. */ }
-    setStep("done");
-    setSubmitting(false);
   }
 
   const hasExtraAnswer = Boolean(job || pain || want);
