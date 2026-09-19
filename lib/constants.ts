@@ -2,9 +2,12 @@
 // - visible: false 인 회차는 화면 노출·폼 선택지에서 제외됩니다(코드에는 미리 넣어둘 수 있음).
 // - 활성 회차(SESSION) = visible이고 아직 시작하지 않은 회차 중 가장 이른 회차.
 //   시작 시각이 지나면 다음 회차로 자동으로 넘어갑니다.
+// - formOption: 구글폼 "수업 날짜" 문항(entry.1471197970)의 선택지와 글자 단위로 같아야 합니다.
+//   구글폼은 라디오 값이 선택지와 다르면 응답 전체를 400으로 거부합니다.
+//   생략하면 "9/22(화) 저녁 8시~10시30분" 형식으로 자동 생성되고, 구글폼 쪽 표기가 다르면 여기서 그대로 적어 덮어씁니다.
 const SESSION_LIST = [
   { round: 56, startsAtISO: "2026-09-22T20:00:00+09:00", durationMinutes: 150, visible: true  },
-  { round: 57, startsAtISO: "2026-09-29T20:00:00+09:00", durationMinutes: 150, visible: true  },
+  { round: 57, startsAtISO: "2026-09-29T20:00:00+09:00", durationMinutes: 150, visible: true, formOption: "9/29(화) 저녁8시~10시30분" },
   { round: 58, startsAtISO: "2026-10-06T20:00:00+09:00", durationMinutes: 150, visible: false },
 ] as const;
 
@@ -33,7 +36,9 @@ export type SessionInfo = {
   timeRangeLabel: string;
   /** "저녁 8시" */
   formTimeLabel: string;
-  /** 구글폼 선택지와 글자 단위로 일치해야 하는 값. "9/22(화) 저녁 8시~10시30분" */
+  /** 폼 라디오에 보여주는 회차 라벨(항상 자동 형식). "9/22(화) 저녁 8시~10시30분" */
+  pickerLabel: string;
+  /** 구글폼 선택지와 글자 단위로 일치해야 하는 전송값. SESSION_LIST의 formOption이 있으면 그 값, 없으면 pickerLabel과 동일 */
   formOption: string;
 };
 
@@ -72,6 +77,8 @@ function buildSession(source: SessionSource): SessionInfo {
   const timeLabel = `${period} ${hour12}시`;
   const timeRangeLabel = `${timeLabel}~${endHour12}시${e.minute ? ` ${e.minute}분` : ""}`;
   const formTimeLabel = `${formPeriod} ${hour12}시`;
+  const pickerLabel = `${dateLabel} ${formTimeLabel}~${endHour12}시${e.minute ? `${e.minute}분` : ""}`;
+  const formOption = "formOption" in source && source.formOption ? source.formOption : pickerLabel;
 
   return {
     round: source.round,
@@ -87,7 +94,8 @@ function buildSession(source: SessionSource): SessionInfo {
     monthDayLabel: `${s.month}월 ${s.day}일`,
     timeRangeLabel,
     formTimeLabel,
-    formOption: `${dateLabel} ${formTimeLabel}~${endHour12}시${e.minute ? `${e.minute}분` : ""}`,
+    pickerLabel,
+    formOption,
   };
 }
 
@@ -153,7 +161,7 @@ export function isSessionFallback(now: number = Date.now()): boolean {
 const SESSION_KEYS = [
   "round", "visible", "startsAtISO", "startsAt", "endsAt",
   "dateLabel", "timeLabel", "fullLabel", "dateWithWeekday", "fullDateLabel",
-  "monthDayLabel", "timeRangeLabel", "formTimeLabel", "formOption",
+  "monthDayLabel", "timeRangeLabel", "formTimeLabel", "pickerLabel", "formOption",
 ] as const satisfies readonly (keyof SessionInfo)[];
 
 export const SESSION: Readonly<SessionInfo> = Object.freeze(
