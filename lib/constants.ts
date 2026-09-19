@@ -102,6 +102,33 @@ export function getSelectableSessions(now: number = Date.now()): readonly Sessio
 }
 
 /**
+ * 선택 가능한 회차 목록(배열처럼 사용). 접근할 때마다 현재 시각으로 다시 계산되는 읽기 전용 뷰입니다.
+ * 모듈 로드 시 한 번 고정된 배열이면 서버 프로세스가 살아 있는 동안 회차가 넘어가지 않기 때문에
+ * 모든 읽기(length, 인덱스, map/filter/slice, 전개)를 getSelectableSessions()의 새 결과로 위임합니다.
+ */
+function liveList<T>(compute: () => readonly T[]): readonly T[] {
+  return new Proxy([] as T[], {
+    get(_target, prop) {
+      const list = compute();
+      const value = Reflect.get(list, prop);
+      return typeof value === "function" ? value.bind(list) : value;
+    },
+    has: (_target, prop) => Reflect.has(compute(), prop),
+    ownKeys: () => Reflect.ownKeys(compute()),
+    getOwnPropertyDescriptor(_target, prop) {
+      const descriptor = Reflect.getOwnPropertyDescriptor(compute(), prop);
+      if (descriptor && prop !== "length") descriptor.configurable = true;
+      return descriptor;
+    },
+    set: () => false,
+    deleteProperty: () => false,
+    defineProperty: () => false,
+  });
+}
+
+export const SELECTABLE_SESSIONS: readonly SessionInfo[] = liveList(() => getSelectableSessions());
+
+/**
  * 활성 회차: 선택 가능한 회차 중 가장 이른 회차.
  * 모든 visible 회차가 지났으면 마지막 visible 회차를 그대로 반환해 화면이 비지 않게 합니다(폴백).
  */

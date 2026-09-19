@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 import { SESSION } from "@/lib/constants";
 
 type Remaining = { days: number; hours: number; minutes: number; seconds: number } | null;
-const TARGET = new Date(SESSION.startsAtISO).getTime();
 
 export function Countdown() {
   const [remaining, setRemaining] = useState<Remaining>(null);
   const [ended, setEnded] = useState(false);
 
   useEffect(() => {
+    // 활성 회차(SESSION)의 시작 시각. 마운트 시점에 읽어 회차가 넘어가면 다음 회차를 바라봅니다.
+    const target = new Date(SESSION.startsAtISO).getTime();
     const update = () => {
-      const diff = TARGET - Date.now();
+      const diff = target - Date.now();
       if (diff <= 0) { setEnded(true); setRemaining(null); return; }
       setRemaining({
         days: Math.floor(diff / 86400000),

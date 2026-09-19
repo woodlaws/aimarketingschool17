@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { getActiveSession, getSelectableSessions, type SessionInfo } from "@/lib/constants";
+import { getActiveSession, SELECTABLE_SESSIONS, type SessionInfo } from "@/lib/constants";
 
 type Step = "form" | "questions" | "done";
 type Lead = { name: string; phone: string; email: string };
@@ -88,7 +88,7 @@ export function ApplyForm() {
   const [step, setStep] = useState<Step>("form");
   const [lead, setLead] = useState<Lead>({ name: "", phone: "", email: "" });
   // 마운트 시점 기준 회차 목록. 선택 기본값은 가장 임박한 회차(활성 회차).
-  const [sessions] = useState<readonly SessionInfo[]>(() => getSelectableSessions());
+  const [sessions] = useState<readonly SessionInfo[]>(() => SELECTABLE_SESSIONS.slice());
   const [session, setSession] = useState<SessionInfo>(() => getActiveSession());
   const noOpenSession = sessions.length === 0;
   const [agree, setAgree] = useState(false);
@@ -171,6 +171,13 @@ export function ApplyForm() {
       <AnimatePresence mode="wait" initial={false}>
         {step === "form" ? (
           <motion.form key="form" onSubmit={submitLead} initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} exit={reduceMotion ? undefined : { opacity: 0 }} transition={transition} className="space-y-5">
+            {sessions.length > 1 ? (
+              <RadioCards legend="참석 희망 회차" name="session" large required options={sessions.map((item) => item.formOption)} value={session.formOption} onChange={(option) => { const picked = sessions.find((item) => item.formOption === option); if (picked) setSession(picked); }} />
+            ) : (
+              <p className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-lg font-bold leading-7 text-slate-700">
+                {noOpenSession ? "현재 모집 중인 회차가 없습니다. 신청하시면 다음 회차 일정을 문자로 안내드립니다." : `${session.formOption} 참석`}
+              </p>
+            )}
             <label className="block font-bold">성함 <span className="text-danger">*</span>
               <input name="name" value={lead.name} onChange={(event) => setLead((current) => ({ ...current, name: event.target.value }))} required autoComplete="name" className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-4 text-base outline-none focus:border-brand focus:ring-2 focus:ring-blue-100" placeholder="성함을 입력해 주세요" />
             </label>
@@ -180,13 +187,6 @@ export function ApplyForm() {
             <label className="block font-bold">이메일 <span className="text-danger">*</span>
               <input name="email" value={lead.email} onChange={(event) => setLead((current) => ({ ...current, email: event.target.value }))} type="email" required autoComplete="email" className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-4 text-base outline-none focus:border-brand focus:ring-2 focus:ring-blue-100" placeholder="example@email.com" />
             </label>
-            {sessions.length > 1 ? (
-              <RadioCards legend="참석 희망 회차" name="session" large required options={sessions.map((item) => item.formOption)} value={session.formOption} onChange={(option) => { const picked = sessions.find((item) => item.formOption === option); if (picked) setSession(picked); }} />
-            ) : (
-              <p className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-lg font-bold leading-7 text-slate-700">
-                {noOpenSession ? "현재 모집 중인 회차가 없습니다. 신청하시면 다음 회차 일정을 문자로 안내드립니다." : `${session.formOption} 참석`}
-              </p>
-            )}
             <div className="text-sm leading-6 text-slate-600">
               <div className="flex items-start gap-3">
                 <input id="agree" name="agree" type="checkbox" checked={agree} onChange={(event) => setAgree(event.target.checked)} required className="mt-1 size-5 shrink-0 accent-brand" />
