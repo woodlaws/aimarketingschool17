@@ -6,6 +6,9 @@ import { Fear, Curriculum, Comparison } from "@/components/sections/UrgencyCurri
 import { Profile, Urgency, Apply, FAQ, FinalCTA } from "@/components/sections/AuthorityApply";
 import { StickyCTA } from "@/components/StickyCTA";
 
+// 활성 회차는 현재 시각으로 정해지므로 정적 빌드 시점에 고정되지 않게 최대 60초마다 재생성합니다.
+export const revalidate = 60;
+
 export default function Home() {
   return (
     <main className="overflow-x-clip">

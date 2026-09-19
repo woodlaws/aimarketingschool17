@@ -5,14 +5,14 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://aimarketingschool17.vercel.app"),
   title: "AI로 돈이 들어오는 구조 | AI마케팅스쿨 무료특강",
-  description: "콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간에 공개합니다.",
+  description: "콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간 30분에 공개합니다.",
   openGraph: {
     type: "website",
     locale: "ko_KR",
     url: "https://aimarketingschool17.vercel.app",
     siteName: "AI마케팅스쿨",
     title: "AI로 돈이 들어오는 구조 | AI마케팅스쿨 무료특강",
-    description: "콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간에 공개합니다.",
+    description: "콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간 30분에 공개합니다.",
     images: [
       {
         url: "https://aimarketingschool17.vercel.app/og-image.png",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AI로 돈이 들어오는 구조 | AI마케팅스쿨 무료특강",
-    description: "콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간에 공개합니다.",
+    description: "콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간 30분에 공개합니다.",
     images: ["https://aimarketingschool17.vercel.app/og-image.png"],
   },
 };
