@@ -2,12 +2,13 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { SESSION } from "@/lib/constants";
+import { getActiveSession, SELECTABLE_SESSIONS, type SessionInfo } from "@/lib/constants";
 
 type Step = "form" | "questions" | "done";
 type Lead = { name: string; phone: string; email: string };
 
-const JOBS = ["직장인", "주부", "온라인 사업", "오프라인 매장 운영", "온·오프라인 모두 운영", "학생·취준생", "기타"] as const;
+// 구글폼 5번 문항(entry.733759544)의 선택지와 글자 단위로 같아야 합니다. 다르면 구글폼이 응답 전체를 400으로 거부합니다.
+const JOBS = ["직장인", "주부", "온라인 사업", "오프라인 매장 운영", "온, 오프라인 모두 운영", "학생, 취준생", "기타"] as const;
 const PAINS = [
   "콘텐츠는 만드는데 문의로 이어지지 않는다",
   "뭘 올려야 할지 소재가 떠오르지 않는다",
@@ -24,15 +25,18 @@ const WANTS = [
   "전체 구조부터 이해하고 싶다",
 ] as const;
 
+// 구글폼 8번 문항(entry.21398181) 선택지와 동일한 값만 보냅니다.
 const SOURCE_MAP: Record<string, string> = {
   meta: "인스타그램", facebook: "인스타그램", instagram: "인스타그램",
   sms: "문자메시지", cafe: "네이버카페", blog: "네이버블로그",
   kakao: "카카오톡", threads: "스레드", youtube: "유튜브", email: "이메일",
 };
 const UTM_STORAGE_KEY = "aims17_utm_source";
-const EVENT_OPTION = SESSION.formOption;
 
-// 구글폼 변경 시 여기만 수정
+// 구글폼 변경 시 여기만 수정. entry ID는 구글폼 문항과 1:1로 대응합니다.
+//   entry.694594280 성함 / entry.357585861 휴대폰 / entry.541062845 이메일 / entry.1471197970 참석 희망일 / entry.683816447 마케팅 동의(필수)
+//   entry.733759544 하시는 일 / entry.846365700 어려운 점 / entry.549374384 듣고 싶은 것 / entry.1241076136 인스타그램 / entry.21398181 유입 경로(선택)
+// mode: "no-cors"는 구글폼 CORS 제약 때문에 유지합니다. 응답을 읽을 수 없으므로 fetch가 예외 없이 끝나면 저장 성공으로 간주합니다.
 const FORM_ENDPOINT = "https://docs.google.com/forms/d/e/1FAIpQLSeZTe5bwfGdckyQYrDqlwmcpYgH4vRW13P7nPsHk_hgkrNo-g/formResponse";
 
 async function submitToGoogleForm(fields: Record<string, string>) {
@@ -60,8 +64,8 @@ function getSourceFromSession() {
   } catch { return "기타"; }
 }
 
-function RadioCards({ legend, name, options, value, onChange }: {
-  legend: string; name: string; options: readonly string[]; value: string; onChange: (value: string) => void;
+function RadioCards({ legend, name, options, value, onChange, large = false, required = false }: {
+  legend: string; name: string; options: readonly string[]; value: string; onChange: (value: string) => void; large?: boolean; required?: boolean;
 }) {
   return (
     <fieldset>
@@ -71,8 +75,8 @@ function RadioCards({ legend, name, options, value, onChange }: {
           const id = `${name}-${option}`;
           return (
             <div key={option} className="relative">
-              <input id={id} name={name} type="radio" value={option} checked={value === option} onChange={() => onChange(option)} className="peer sr-only" />
-              <label htmlFor={id} className="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm leading-6 text-slate-700 transition hover:border-blue-300 peer-checked:border-2 peer-checked:border-brand peer-checked:bg-blue-50 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand motion-reduce:transition-none">
+              <input id={id} name={name} type="radio" value={option} checked={value === option} onChange={() => onChange(option)} required={required} className="peer sr-only" />
+              <label htmlFor={id} className={`flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 ${large ? "text-lg leading-7" : "text-sm leading-6"} text-slate-700 transition hover:border-blue-300 peer-checked:border-2 peer-checked:border-brand peer-checked:bg-blue-50 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand motion-reduce:transition-none`}>
                 <span aria-hidden="true" className={`flex size-5 shrink-0 items-center justify-center rounded-full border text-xs font-black ${value === option ? "border-brand bg-brand text-white" : "border-slate-300 text-transparent"}`}>✓</span>
                 <span>{option}</span>
               </label>
@@ -88,6 +92,10 @@ export function ApplyForm() {
   const reduceMotion = useReducedMotion();
   const [step, setStep] = useState<Step>("form");
   const [lead, setLead] = useState<Lead>({ name: "", phone: "", email: "" });
+  // 마운트 시점 기준 회차 목록. 선택 기본값은 가장 임박한 회차(활성 회차).
+  const [sessions] = useState<readonly SessionInfo[]>(() => SELECTABLE_SESSIONS.slice());
+  const [session, setSession] = useState<SessionInfo>(() => getActiveSession());
+  const noOpenSession = sessions.length === 0;
   const [agree, setAgree] = useState(false);
   const [job, setJob] = useState("");
   const [pain, setPain] = useState("");
@@ -129,7 +137,7 @@ export function ApplyForm() {
       "entry.357585861": lead.phone,
       "entry.541062845": lead.email,
       "entry.683816447": "동의합니다",
-      "entry.1471197970": EVENT_OPTION,
+      "entry.1471197970": session.formOption,
       "entry.21398181": getSourceFromSession(),
     };
     if (!skipQuestions) {
@@ -141,20 +149,29 @@ export function ApplyForm() {
     try {
       await submitToGoogleForm(fields);
     } catch {
-      // 네트워크 예외에서도 요청이 서버에 도착했을 수 있으므로 재전송하지 않습니다.
+      // 요청 자체가 실패(네트워크 오류 등)한 경우: 완료 처리하지 않고 안내 문구를 보여 주며 같은 화면에서 다시 시도할 수 있게 합니다.
+      isSubmittingRef.current = false;
+      setSubmitting(false);
+      setError("신청 전송에 실패했습니다. 네트워크 상태를 확인한 뒤 다시 시도해 주세요. 계속 실패하면 010-5795-8075로 연락해 주세요.");
+      return;
     }
-    // no-cors 응답은 확인할 수 없으며, 완료 처리와 Lead 이벤트는 한 지점에서만 실행합니다.
+    // 저장 요청이 성공적으로 끝난 직후에만 Lead 이벤트를 보냅니다. (no-cors라 응답 본문은 볼 수 없지만
+    // fetch가 예외 없이 완료된 것을 저장 성공으로 간주합니다.) eventID로 중복 전송을 막습니다.
+    trackLead();
+    setStep("done");
+    setSubmitting(false);
+  }
+
+  function trackLead() {
     const trackedWindow = window as typeof window & { fbq?: (...args: unknown[]) => void };
     leadEventIdRef.current ??= typeof crypto.randomUUID === "function"
       ? crypto.randomUUID()
       : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
     try {
       if (typeof trackedWindow.fbq === "function") {
-        trackedWindow.fbq("track", "Lead", {}, { eventID: leadEventIdRef.current });
+        trackedWindow.fbq("track", "Lead", { content_name: "17기_무료특강", value: 0, currency: "KRW" }, { eventID: leadEventIdRef.current });
       }
     } catch { /* 픽셀 오류가 신청 완료 화면을 막지 않도록 합니다. */ }
-    setStep("done");
-    setSubmitting(false);
   }
 
   const hasExtraAnswer = Boolean(job || pain || want);
@@ -168,6 +185,13 @@ export function ApplyForm() {
       <AnimatePresence mode="wait" initial={false}>
         {step === "form" ? (
           <motion.form key="form" onSubmit={submitLead} initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} exit={reduceMotion ? undefined : { opacity: 0 }} transition={transition} className="space-y-5">
+            {sessions.length > 1 ? (
+              <RadioCards legend="참석 희망 회차" name="session" large required options={sessions.map((item) => item.pickerLabel)} value={session.pickerLabel} onChange={(option) => { const picked = sessions.find((item) => item.pickerLabel === option); if (picked) setSession(picked); }} />
+            ) : (
+              <p className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-lg font-bold leading-7 text-slate-700">
+                {noOpenSession ? "현재 모집 중인 회차가 없습니다. 신청하시면 다음 회차 일정을 문자로 안내드립니다." : `${session.pickerLabel} 참석`}
+              </p>
+            )}
             <label className="block font-bold">성함 <span className="text-danger">*</span>
               <input name="name" value={lead.name} onChange={(event) => setLead((current) => ({ ...current, name: event.target.value }))} required autoComplete="name" className="mt-2 w-full rounded-lg border border-slate-300 px-4 py-4 text-base outline-none focus:border-brand focus:ring-2 focus:ring-blue-100" placeholder="성함을 입력해 주세요" />
             </label>
@@ -222,8 +246,14 @@ export function ApplyForm() {
           <motion.div key="done" initial={reduceMotion ? false : { opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={transition} className="py-8 text-center">
             <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-brand text-2xl text-white">✓</div>
             <h3 className="mt-5 text-2xl font-black text-brand">신청이 완료되었습니다.</h3>
-            <p className="mt-3 leading-7 text-slate-600">{SESSION.dateWithWeekday} {SESSION.formTimeLabel}, 문자로 줌 링크를 보내드립니다.</p>
-            <p className="mt-5 font-bold">감사합니다. {SESSION.monthDayLabel}에 뵙겠습니다.</p>
+            {noOpenSession ? (
+              <p className="mt-3 leading-7 text-slate-600">다음 회차 일정이 확정되면 문자로 줌 링크를 보내드립니다.</p>
+            ) : (
+              <>
+                <p className="mt-3 leading-7 text-slate-600">{session.dateWithWeekday} {session.formTimeLabel}, 문자로 줌 링크를 보내드립니다.</p>
+                <p className="mt-5 font-bold">감사합니다. {session.monthDayLabel}에 뵙겠습니다.</p>
+              </>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

@@ -10,8 +10,8 @@ export function Profile() {
 }
 
 export function Urgency() {
-  const items=[`${SESSION.dateWithWeekday} ${SESSION.timeLabel}, 단 1회`,"녹화본 없음 · 다시보기 없음","실시간 Q&A는 선착순","17기는 2026년 마지막 기수 — 이 특강이 마지막 안내입니다"];
-  return <section className="sales-section bg-brand text-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title text-center">이 특강, 다시 없습니다.</h2></FadeUp><FadeUp className="mt-10"><Countdown /></FadeUp><div className="mt-10 space-y-3">{items.map(item=><FadeUp key={item}><p className="rounded-xl bg-white/10 p-4 font-extrabold">🔴 {item}</p></FadeUp>)}</div></div></section>;
+  const items=[`${SESSION.dateWithWeekday} ${SESSION.timeLabel} · 선착순 300명 마감`,"녹화본 없음 · 다시보기 없음","실시간 Q&A는 선착순","17기는 2026년 마지막 기수 · 10월 8일(목) 개강"];
+  return <section className="sales-section bg-brand text-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title text-center">17기 개강까지 2주. 준비할 시간이 얼마 없습니다.</h2></FadeUp><FadeUp className="mt-10"><Countdown /></FadeUp><div className="mt-10 space-y-3">{items.map(item=><FadeUp key={item}><p className="rounded-xl bg-white/10 p-4 font-extrabold">🔴 {item}</p></FadeUp>)}</div></div></section>;
 }
 
 export function Apply() {
@@ -33,5 +33,5 @@ export function FAQ() {
 }
 
 export function FinalCTA() {
-  return <><section className="sales-section bg-brand-dark text-center text-white"><div className="sales-wrap"><FadeUp><h2 className="text-3xl font-black leading-relaxed md:text-5xl">작년에도 똑같은 고민 하셨을 겁니다.<br /><br />내년에도 똑같이 하시겠습니까?</h2><a href="#apply" className="primary-cta mt-10 flex w-full items-center justify-between rounded-xl bg-brand px-6 py-5 font-black">무료특강 신청하기 <span>→</span></a><p className="mt-7 text-sm font-extrabold leading-7 text-accent">P.S. 녹화본은 없습니다.<br />{SESSION.monthDayLabel} {SESSION.timeLabel}에 안 오시면, 이 내용은 그냥 사라집니다.</p></FadeUp></div></section><footer className="bg-slate-950 px-5 py-10 text-center text-sm leading-7 text-slate-400"><p className="font-bold text-white">거상스쿨 · 거상마케팅센터</p><p>교육 문의 : 권현임 교육팀장 <a className="text-white underline" href="tel:01057958075">010-5795-8075</a></p><p>AI마케팅스쿨 17기 : 2026년 10월 8일(목) 개강 · 12주 과정</p></footer></>;
+  return <><section className="sales-section bg-brand-dark text-center text-white"><div className="sales-wrap"><FadeUp><h2 className="text-3xl font-black leading-relaxed md:text-5xl">작년에도 똑같은 고민 하셨을 겁니다.<br /><br />내년에도 똑같이 하시겠습니까?</h2><a href="#apply" className="primary-cta mt-10 flex w-full items-center justify-between rounded-xl bg-brand px-6 py-5 font-black">무료특강 신청하기 <span>→</span></a><p className="mt-7 text-sm font-extrabold leading-7 text-accent">P.S. 녹화본은 없습니다.<br />{SESSION.monthDayLabel} {SESSION.timeLabel}, 그 자리에 계셔야 합니다.</p></FadeUp></div></section><footer className="bg-slate-950 px-5 py-10 text-center text-sm leading-7 text-slate-400"><p className="font-bold text-white">거상스쿨 · 거상마케팅센터</p><p>교육 문의 : 권현임 교육팀장 <a className="text-white underline" href="tel:01057958075">010-5795-8075</a></p><p>AI마케팅스쿨 17기 : 2026년 10월 8일(목) 개강 · 12주 과정</p></footer></>;
 }
