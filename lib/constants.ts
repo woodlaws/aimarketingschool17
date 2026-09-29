@@ -4,11 +4,10 @@
 //   시작 시각이 지나면 다음 회차로 자동으로 넘어갑니다.
 // - formOption: 구글폼 "수업 날짜" 문항(entry.1471197970)의 선택지와 글자 단위로 같아야 합니다.
 //   구글폼은 라디오 값이 선택지와 다르면 응답 전체를 400으로 거부합니다.
-//   생략하면 "9/22(화) 저녁 8시~10시30분" 형식으로 자동 생성되고, 구글폼 쪽 표기가 다르면 여기서 그대로 적어 덮어씁니다.
+//   생략하면 "10/6(화) 저녁 8시~10시30분" 형식으로 자동 생성되고, 구글폼 쪽 표기가 다르면 여기서 그대로 적어 덮어씁니다.
 const SESSION_LIST = [
-  { round: 56, startsAtISO: "2026-09-22T20:00:00+09:00", durationMinutes: 150, visible: true  },
-  { round: 57, startsAtISO: "2026-09-29T20:00:00+09:00", durationMinutes: 150, visible: true, formOption: "9/29(화) 저녁8시~10시30분" },
-  { round: 58, startsAtISO: "2026-10-06T20:00:00+09:00", durationMinutes: 150, visible: false },
+  // 58차(2026년 마지막 무료특강, 17기 개강 이틀 전). 구글폼 선택지: "10/6(화) 저녁8시~10시30분"
+  { round: 58, startsAtISO: "2026-10-06T20:00:00+09:00", durationMinutes: 150, visible: true, formOption: "10/6(화) 저녁8시~10시30분" },
 ] as const;
 
 type SessionSource = (typeof SESSION_LIST)[number];
@@ -20,23 +19,23 @@ export type SessionInfo = {
   /** 시작 시각(epoch ms). 이 시각이 지나면 다음 회차로 넘어갑니다. */
   startsAt: number;
   endsAt: number;
-  /** "9/22(화)" */
+  /** "10/6(화)" */
   dateLabel: string;
   /** "밤 8시" */
   timeLabel: string;
-  /** "2026년 9월 22일(화) 밤 8시~10시 30분" */
+  /** "2026년 10월 6일(화) 밤 8시~10시 30분" */
   fullLabel: string;
-  /** "9월 22일(화)" */
+  /** "10월 6일(화)" */
   dateWithWeekday: string;
-  /** "2026년 9월 22일(화)" */
+  /** "2026년 10월 6일(화)" */
   fullDateLabel: string;
-  /** "9월 22일" */
+  /** "10월 6일" */
   monthDayLabel: string;
   /** "밤 8시~10시 30분" */
   timeRangeLabel: string;
   /** "저녁 8시" */
   formTimeLabel: string;
-  /** 폼 라디오에 보여주는 회차 라벨(항상 자동 형식). "9/22(화) 저녁 8시~10시30분" */
+  /** 폼 라디오에 보여주는 회차 라벨(항상 자동 형식). "10/6(화) 저녁 8시~10시30분" */
   pickerLabel: string;
   /** 구글폼 선택지와 글자 단위로 일치해야 하는 전송값. SESSION_LIST의 formOption이 있으면 그 값, 없으면 pickerLabel과 동일 */
   formOption: string;

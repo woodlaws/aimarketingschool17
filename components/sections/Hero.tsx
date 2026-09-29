@@ -5,7 +5,7 @@ export function Hero() {
     <section className="flex min-h-[100svh] items-center bg-brand-dark px-5 py-16 text-white md:min-h-0 md:py-28">
       <div className="mx-auto w-full max-w-[900px] text-center">
         <div>
-          <p className="section-eyebrow mb-6 inline-flex rounded-full border border-blue-300/30 bg-blue-400/10 px-4 py-2 font-bold text-blue-100">제{SESSION.round}차 · 실시간 무료특강 · 참가비 0원</p>
+          <p className="section-eyebrow mb-6 inline-flex rounded-full border border-blue-300/30 bg-blue-400/10 px-4 py-2 font-bold text-blue-100">🔥 2026년 마지막 무료특강</p>
           <h1 className="text-[1.8rem] font-black leading-[1.22] tracking-[-.045em] sm:text-5xl md:text-[4rem]">ChatGPT 3년째 쓰는데,<br /><mark>왜 통장은 그대로일까요?</mark></h1>
           <p className="mt-6 text-lg leading-8 text-slate-300 md:text-xl">도구를 몰라서가 아닙니다.<br /><strong className="text-accent">돈이 들어오는 구조</strong>를 안 배웠기 때문입니다.</p>
           <div className="hero-meta mt-8 grid gap-3 font-semibold text-slate-200 md:grid-cols-3">
@@ -14,7 +14,7 @@ export function Hero() {
             <p className="rounded-lg bg-white/5 px-3 py-3">⏺️ 녹화본<br />없음</p>
           </div>
           <a href="#apply" className="primary-cta mt-6 flex w-full min-h-16 items-center justify-between rounded-xl bg-brand px-6 py-5 font-black text-white shadow-lg shadow-blue-950/40 transition hover:-translate-y-0.5 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300">무료로 자리 맡기 <span>→</span></a>
-          <p className="hero-note mt-4 font-medium text-slate-300">신청하시면 문자로 참여 링크를 보내드립니다.</p>
+          <p className="hero-note mt-4 font-medium text-slate-300">이번을 놓치면 2027년까지 기다려야 합니다.<br />신청하시면 문자로 참여 링크를 보내드립니다.</p>
         </div>
       </div>
     </section>
