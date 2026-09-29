@@ -10,12 +10,12 @@ export function Profile() {
 }
 
 export function Urgency() {
-  const items=[`${SESSION.dateWithWeekday} ${SESSION.timeLabel} · 선착순 300명 마감`,"녹화본 없음 · 다시보기 없음","실시간 Q&A는 선착순","17기는 2026년 마지막 기수 · 10월 8일(목) 개강"];
-  return <section className="sales-section bg-brand text-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title text-center">17기 개강까지 2주. 준비할 시간이 얼마 없습니다.</h2></FadeUp><FadeUp className="mt-10"><Countdown /></FadeUp><div className="mt-10 space-y-3">{items.map(item=><FadeUp key={item}><p className="rounded-xl bg-white/10 p-4 font-extrabold">🔴 {item}</p></FadeUp>)}</div></div></section>;
+  const items=[`${SESSION.dateWithWeekday} ${SESSION.timeLabel} · 마지막 무료특강 · 선착순 300명 마감`,"17기 개강 전 마지막 무료특강 — 이후 무료특강 일정 없음","녹화본 없음 · 다시보기 없음","실시간 Q&A는 선착순","17기는 2026년 마지막 기수 · 10월 8일(목) 개강"];
+  return <section className="sales-section bg-brand text-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title text-center">17기 개강 이틀 전, 마지막 무료특강. 준비할 시간이 얼마 없습니다.</h2></FadeUp><FadeUp className="mt-10"><Countdown /></FadeUp><div className="mt-10 space-y-3">{items.map(item=><FadeUp key={item}><p className="rounded-xl bg-white/10 p-4 font-extrabold">🔴 {item}</p></FadeUp>)}</div></div></section>;
 }
 
 export function Apply() {
-  return <section id="apply" className="sales-section scroll-mt-6 bg-surface"><div className="sales-wrap"><FadeUp className="text-center"><h2 className="sales-title">0원. 2시간 30분. 자리 하나.</h2><p className="sales-body mt-4 text-muted">신청하시면 문자로 참여 링크를 보내드립니다.</p></FadeUp><FadeUp className="mt-10"><ApplyForm /></FadeUp></div></section>;
+  return <section id="apply" className="sales-section scroll-mt-6 bg-surface"><div className="sales-wrap"><FadeUp className="text-center"><h2 className="sales-title">0원. 2시간 30분. 자리 하나.</h2><p className="sales-body mt-4 font-extrabold text-danger">이번을 놓치면 2027년까지 기다려야 합니다.</p><p className="sales-body mt-2 text-muted">신청하시면 문자로 참여 링크를 보내드립니다.</p></FadeUp><FadeUp className="mt-10"><ApplyForm /></FadeUp></div></section>;
 }
 
 const faqs = [
