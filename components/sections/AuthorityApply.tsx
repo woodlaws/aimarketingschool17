@@ -10,12 +10,12 @@ export function Profile() {
 }
 
 export function Urgency() {
-  const items=[`${SESSION.dateWithWeekday} ${SESSION.timeLabel} · 마지막 무료특강 · 선착순 300명 마감`,"17기 개강 전 마지막 무료특강 — 이후 무료특강 일정 없음","녹화본 없음 · 다시보기 없음","실시간 Q&A는 선착순","17기는 2026년 마지막 기수 · 10월 8일(목) 개강"];
-  return <section className="sales-section bg-brand text-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title text-center">17기 개강 이틀 전, 마지막 무료특강. 준비할 시간이 얼마 없습니다.</h2></FadeUp><FadeUp className="mt-10"><Countdown /></FadeUp><div className="mt-10 space-y-3">{items.map(item=><FadeUp key={item}><p className="rounded-xl bg-white/10 p-4 font-extrabold">🔴 {item}</p></FadeUp>)}</div></div></section>;
+  const items=[`${SESSION.dateWithWeekday} ${SESSION.timeLabel} · 무료특강 · 선착순 300명 마감`,"녹화본 없음 · 다시보기 없음","실시간 Q&A는 선착순","참가비 0원 · 결제 정보 요구 없음"];
+  return <section className="sales-section bg-brand text-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title text-center">{SESSION.dateWithWeekday} {SESSION.timeLabel}. 자리가 얼마 남지 않았습니다.</h2></FadeUp><FadeUp className="mt-10"><Countdown /></FadeUp><div className="mt-10 space-y-3">{items.map(item=><FadeUp key={item}><p className="rounded-xl bg-white/10 p-4 font-extrabold">🔴 {item}</p></FadeUp>)}</div></div></section>;
 }
 
 export function Apply() {
-  return <section id="apply" className="sales-section scroll-mt-6 bg-surface"><div className="sales-wrap"><FadeUp className="text-center"><h2 className="sales-title">0원. 2시간 30분. 자리 하나.</h2><p className="sales-body mt-4 font-extrabold text-danger">이번을 놓치면 2027년까지 기다려야 합니다.</p><p className="sales-body mt-2 text-muted">신청하시면 문자로 참여 링크를 보내드립니다.</p></FadeUp><FadeUp className="mt-10"><ApplyForm /></FadeUp></div></section>;
+  return <section id="apply" className="sales-section scroll-mt-6 bg-surface"><div className="sales-wrap"><FadeUp className="text-center"><h2 className="sales-title">0원. 2시간 30분. 자리 하나.</h2><p className="sales-body mt-4 font-extrabold text-danger">녹화본 없이, 그날 그 자리에서만 보실 수 있습니다.</p><p className="sales-body mt-2 text-muted">신청하시면 문자로 참여 링크를 보내드립니다.</p></FadeUp><FadeUp className="mt-10"><ApplyForm /></FadeUp></div></section>;
 }
 
 const faqs = [
@@ -25,7 +25,7 @@ const faqs = [
   ["제 업종에도 해당되나요?", "오프라인 매장, 온라인 쇼핑몰, 서비스업, 1인 프리랜서 모두 적용 가능한 구조로 설명드립니다."],
   ["노트북이 꼭 있어야 하나요?", "폰으로 시청만 하셔도 됩니다. 다만 함께 따라 해보시려면 PC를 권장합니다."],
   ["중간에 나가도 되나요?", "네. 다만 4번째 파트(AI 직원 세팅)가 가장 반응이 좋습니다."],
-  ["17기는 언제 시작하나요?", "2026년 10월 8일(목) 개강, 12주 과정입니다. 매주 목요일 저녁 8~11시 Zoom 라이브로 진행됩니다."]
+  ["17기는 언제 시작하나요?", "12주 과정이며, 매주 목요일 저녁 8~11시 Zoom 라이브로 진행됩니다. 자세한 일정과 참여 방법은 특강 마지막 10분에 안내드립니다."]
 ];
 
 export function FAQ() {
@@ -33,5 +33,5 @@ export function FAQ() {
 }
 
 export function FinalCTA() {
-  return <><section className="sales-section bg-brand-dark text-center text-white"><div className="sales-wrap"><FadeUp><h2 className="text-3xl font-black leading-relaxed md:text-5xl">작년에도 똑같은 고민 하셨을 겁니다.<br /><br />내년에도 똑같이 하시겠습니까?</h2><a href="#apply" className="primary-cta mt-10 flex w-full items-center justify-between rounded-xl bg-brand px-6 py-5 font-black">무료특강 신청하기 <span>→</span></a><p className="mt-7 text-sm font-extrabold leading-7 text-accent">P.S. 녹화본은 없습니다.<br />{SESSION.monthDayLabel} {SESSION.timeLabel}, 그 자리에 계셔야 합니다.</p></FadeUp></div></section><footer className="bg-slate-950 px-5 py-10 text-center text-sm leading-7 text-slate-400"><p className="font-bold text-white">거상스쿨 · 거상마케팅센터</p><p>교육 문의 : 권현임 교육팀장 <a className="text-white underline" href="tel:01057958075">010-5795-8075</a></p><p>AI마케팅스쿨 17기 : 2026년 10월 8일(목) 개강 · 12주 과정</p></footer></>;
+  return <><section className="sales-section bg-brand-dark text-center text-white"><div className="sales-wrap"><FadeUp><h2 className="text-3xl font-black leading-relaxed md:text-5xl">작년에도 똑같은 고민 하셨을 겁니다.<br /><br />내년에도 똑같이 하시겠습니까?</h2><a href="#apply" className="primary-cta mt-10 flex w-full items-center justify-between rounded-xl bg-brand px-6 py-5 font-black">무료특강 신청하기 <span>→</span></a><p className="mt-7 text-sm font-extrabold leading-7 text-accent">P.S. 녹화본은 없습니다.<br />{SESSION.monthDayLabel} {SESSION.timeLabel}, 그 자리에 계셔야 합니다.</p></FadeUp></div></section><footer className="bg-slate-950 px-5 py-10 text-center text-sm leading-7 text-slate-400"><p className="font-bold text-white">거상스쿨 · 거상마케팅센터</p><p>교육 문의 : 권현임 교육팀장 <a className="text-white underline" href="tel:01057958075">010-5795-8075</a></p><p>AI마케팅스쿨 17기 · 12주 과정 · 매주 목요일 Zoom 라이브</p></footer></>;
 }

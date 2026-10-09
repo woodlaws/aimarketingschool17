@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+import { SEMINAR_DATE_LABEL, SEMINAR_START_TIME_LABEL } from "@/lib/constants";
+
+// 특강 일시는 lib/constants.ts의 CURRENT_SEMINAR에서 파생됩니다.
+// [확인 필요] <title>: 일시를 앞세운 형태로 바꿨습니다. og/twitter title은 기존 문구 유지.
+const SEMINAR_TITLE = `${SEMINAR_DATE_LABEL} ${SEMINAR_START_TIME_LABEL} 무료특강 | AI로 돈이 들어오는 구조`;
+const SEMINAR_DESCRIPTION = `${SEMINAR_DATE_LABEL} ${SEMINAR_START_TIME_LABEL} 무료특강. 콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간 30분에 공개합니다.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://aimarketingschool17.vercel.app"),
-  title: "AI로 돈이 들어오는 구조 | AI마케팅스쿨 무료특강",
-  description: "10월 6일(화) 밤 8시 마지막 무료특강. 콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간 30분에 공개합니다.",
+  title: SEMINAR_TITLE,
+  description: SEMINAR_DESCRIPTION,
   openGraph: {
     type: "website",
     locale: "ko_KR",
     url: "https://aimarketingschool17.vercel.app",
     siteName: "AI마케팅스쿨",
     title: "AI로 돈이 들어오는 구조 | AI마케팅스쿨 무료특강",
-    description: "10월 6일(화) 밤 8시 마지막 무료특강. 콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간 30분에 공개합니다.",
+    description: SEMINAR_DESCRIPTION,
     images: [
       {
         url: "https://aimarketingschool17.vercel.app/og-image.png",
@@ -25,7 +31,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "AI로 돈이 들어오는 구조 | AI마케팅스쿨 무료특강",
-    description: "10월 6일(화) 밤 8시 마지막 무료특강. 콘텐츠·광고·홈페이지·AI직원까지 한 줄로 연결하는 구조를 2시간 30분에 공개합니다.",
+    description: SEMINAR_DESCRIPTION,
     images: ["https://aimarketingschool17.vercel.app/og-image.png"],
   },
 };
