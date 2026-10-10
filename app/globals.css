@@ -228,6 +228,32 @@ main .sticky-cta a.sticky-cta-button { display: inline-flex; min-height: 60px; a
   :root { --type-hero: 2.125rem; --type-section: 1.875rem; --type-card: 1.4375rem; }
   main .sales-section { padding-inline: 16px; }
 }
+/* 참석 특전 섹션 (components/sections/Perks.tsx) */
+main p.perk-subtitle { font-size: var(--type-emphasis); line-height: 1.3; letter-spacing: -.02em; }
+main p.perk-note { font-size: var(--type-support); line-height: 1.5; }
+main .perk-card-no { font-size: var(--type-support); }
+main .perk-card-title { font-size: var(--type-card); line-height: 1.3; letter-spacing: -.02em; word-break: keep-all; }
+main p.perk-card-sub { font-size: var(--type-support); line-height: 1.5; word-break: keep-all; }
+main .perk-covers { position: relative; height: 240px; width: 100%; max-width: 340px; margin-inline: auto; }
+main .perk-cover { position: absolute; left: 50%; bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 14px 10px; border-radius: 10px; box-shadow: 0 18px 40px rgba(15, 23, 42, .28); text-align: center; word-break: keep-all; }
+main .perk-cover-center { z-index: 2; width: 150px; height: 212px; transform: translateX(-50%); background: #FACC15; color: #111827; }
+main .perk-cover-left, main .perk-cover-right { z-index: 1; width: 118px; height: 168px; background: #0F172A; color: #fff; }
+main .perk-cover-left { transform: translateX(calc(-50% - 94px)) rotate(-9deg); }
+main .perk-cover-right { transform: translateX(calc(-50% + 94px)) rotate(9deg); }
+main .perk-cover-label { font-size: 14px; font-weight: 800; letter-spacing: .12em; opacity: .75; }
+main .perk-cover-title { font-size: 17px; font-weight: 900; line-height: 1.25; }
+main .perk-cover-center .perk-cover-title { font-size: 20px; }
+main .perk-cover-rule { width: 36px; height: 3px; border-radius: 2px; background: currentColor; opacity: .5; }
+@media (min-width: 768px) {
+  main .perk-covers { height: 330px; max-width: 560px; }
+  main .perk-cover-center { width: 210px; height: 296px; }
+  main .perk-cover-left, main .perk-cover-right { width: 164px; height: 232px; }
+  main .perk-cover-left { transform: translateX(calc(-50% - 150px)) rotate(-9deg); }
+  main .perk-cover-right { transform: translateX(calc(-50% + 150px)) rotate(9deg); }
+  main .perk-cover-title { font-size: 22px; }
+  main .perk-cover-center .perk-cover-title { font-size: 27px; }
+  main .perk-cover-label { font-size: 15px; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useRef, useState, type MouseEvent } from "react";
 import { FadeUp } from "@/components/Motion";
+import { PerkNote } from "@/components/PerkNote";
 import { FlywheelLightbox } from "@/components/FlywheelLightbox";
 import { SESSION } from "@/lib/constants";
 
@@ -95,6 +96,7 @@ export function FlywheelSection() {
         <FadeUp className="mt-9 text-center">
           <p className="text-xl font-black text-ink md:text-2xl">이 구조, {SESSION.monthDayLabel} {SESSION.timeLabel}에 직접 보여드립니다</p>
           <a href="#apply" className="primary-cta mt-6 inline-flex w-full max-w-[520px] items-center justify-between rounded-xl bg-brand px-6 py-5 font-black text-white shadow-lg transition hover:bg-blue-700 motion-reduce:transition-none">무료특강 신청하기 <span>→</span></a>
+          <PerkNote className="mt-4" />
         </FadeUp>
       </div>
 
