@@ -1,4 +1,5 @@
 import { Hero, TrustBar } from "@/components/sections/Hero";
+import { Perks } from "@/components/sections/Perks";
 import { Diagnosis, WrongUse, InstructorStory, Dissonance } from "@/components/sections/PainSections";
 import { Proof } from "@/components/sections/StructureProof";
 import { FlywheelSection } from "@/components/sections/FlywheelSection";
@@ -14,6 +15,7 @@ export default function Home() {
     <main className="overflow-x-clip">
       <Hero />
       <TrustBar />
+      <Perks />
       <Diagnosis />
       <WrongUse />
       <Dissonance />

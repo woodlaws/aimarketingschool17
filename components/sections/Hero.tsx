@@ -1,4 +1,5 @@
 import { SESSION, SEMINAR_ROUND } from "@/lib/constants";
+import { PerkNote } from "@/components/PerkNote";
 
 export function Hero() {
   return (
@@ -14,7 +15,8 @@ export function Hero() {
             <p className="rounded-lg bg-white/5 px-3 py-3">⏺️ 녹화본<br />없음</p>
           </div>
           <a href="#apply" className="primary-cta mt-6 flex w-full min-h-16 items-center justify-between rounded-xl bg-brand px-6 py-5 font-black text-white shadow-lg shadow-blue-950/40 transition hover:-translate-y-0.5 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300">무료로 자리 맡기 <span>→</span></a>
-          <p className="hero-note mt-4 font-medium text-slate-300">녹화본 없이, 실시간으로만 진행합니다.<br />신청하시면 문자로 참여 링크를 보내드립니다.</p>
+          <PerkNote tone="dark" className="mt-4" />
+          <p className="hero-note mt-3 font-medium text-slate-300">녹화본 없이, 실시간으로만 진행합니다.<br />신청하시면 문자로 참여 링크를 보내드립니다.</p>
         </div>
       </div>
     </section>

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ApplyForm } from "@/components/ApplyForm";
 import { Countdown } from "@/components/Countdown";
 import { FadeUp } from "@/components/Motion";
+import { PerkNote } from "@/components/PerkNote";
 import { BookTimeline } from "@/components/sections/BookTimeline";
 import { SESSION } from "@/lib/constants";
 
@@ -21,6 +22,7 @@ export function Apply() {
 const faqs = [
   ["AI 완전 초보인데 따라갈 수 있나요?", "네. 코딩·디자인 경험 전혀 필요 없습니다. ChatGPT 가입만 되어 있으면 충분합니다."],
   ["녹화본을 주시나요?", "제공하지 않습니다. 실시간 참여만 가능합니다. 시연 위주라 라이브로만 의미가 있습니다."],
+  ["참석 특전 자료는 언제 받을 수 있나요?", "라이브 특강 마지막에 다운로드 링크를 드립니다. 녹화본이 없으니 꼭 실시간으로 참석해 주세요."],
   ["특강 듣고 나면 유료 결제를 강요하나요?", "아니요. 특강 자체로 완결된 내용입니다. 17기 안내는 마지막 10분에만 드립니다."],
   ["제 업종에도 해당되나요?", "오프라인 매장, 온라인 쇼핑몰, 서비스업, 1인 프리랜서 모두 적용 가능한 구조로 설명드립니다."],
   ["노트북이 꼭 있어야 하나요?", "폰으로 시청만 하셔도 됩니다. 다만 함께 따라 해보시려면 PC를 권장합니다."],
@@ -33,5 +35,5 @@ export function FAQ() {
 }
 
 export function FinalCTA() {
-  return <><section className="sales-section bg-brand-dark text-center text-white"><div className="sales-wrap"><FadeUp><h2 className="text-3xl font-black leading-relaxed md:text-5xl">작년에도 똑같은 고민 하셨을 겁니다.<br /><br />내년에도 똑같이 하시겠습니까?</h2><a href="#apply" className="primary-cta mt-10 flex w-full items-center justify-between rounded-xl bg-brand px-6 py-5 font-black">무료특강 신청하기 <span>→</span></a><p className="mt-7 text-sm font-extrabold leading-7 text-accent">P.S. 녹화본은 없습니다.<br />{SESSION.monthDayLabel} {SESSION.timeLabel}, 그 자리에 계셔야 합니다.</p></FadeUp></div></section><footer className="bg-slate-950 px-5 py-10 text-center text-sm leading-7 text-slate-400"><p className="font-bold text-white">거상스쿨 · 거상마케팅센터</p><p>교육 문의 : 권현임 교육팀장 <a className="text-white underline" href="tel:01057958075">010-5795-8075</a></p><p>AI마케팅스쿨 17기 · 12주 과정 · 매주 목요일 Zoom 라이브</p></footer></>;
+  return <><section className="sales-section bg-brand-dark text-center text-white"><div className="sales-wrap"><FadeUp><h2 className="text-3xl font-black leading-relaxed md:text-5xl">작년에도 똑같은 고민 하셨을 겁니다.<br /><br />내년에도 똑같이 하시겠습니까?</h2><a href="#apply" className="primary-cta mt-10 flex w-full items-center justify-between rounded-xl bg-brand px-6 py-5 font-black">무료특강 신청하기 <span>→</span></a><PerkNote tone="dark" className="mt-4" /><p className="mt-7 text-sm font-extrabold leading-7 text-accent">P.S. 녹화본은 없습니다.<br />{SESSION.monthDayLabel} {SESSION.timeLabel}, 그 자리에 계셔야 합니다.</p></FadeUp></div></section><footer className="bg-slate-950 px-5 py-10 text-center text-sm leading-7 text-slate-400"><p className="font-bold text-white">거상스쿨 · 거상마케팅센터</p><p>교육 문의 : 권현임 교육팀장 <a className="text-white underline" href="tel:01057958075">010-5795-8075</a></p><p>AI마케팅스쿨 17기 · 12주 과정 · 매주 목요일 Zoom 라이브</p></footer></>;
 }
