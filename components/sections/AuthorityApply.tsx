@@ -11,7 +11,7 @@ export function Profile() {
 }
 
 export function Urgency() {
-  const items=[`${SESSION.dateWithWeekday} ${SESSION.timeLabel} · 무료특강 · 선착순 300명 마감`,"녹화본 없음 · 다시보기 없음","실시간 Q&A는 선착순","참가비 0원 · 결제 정보 요구 없음"];
+  const items=[`${SESSION.dateWithWeekday} ${SESSION.timeLabel} · 무료특강 · 선착순 100명 마감`,"녹화본 없음 · 다시보기 없음","실시간 Q&A는 선착순","참가비 0원 · 결제 정보 요구 없음"];
   return <section className="sales-section bg-brand text-white"><div className="sales-wrap"><FadeUp><h2 className="sales-title text-center">{SESSION.dateWithWeekday} {SESSION.timeLabel}. 자리가 얼마 남지 않았습니다.</h2></FadeUp><FadeUp className="mt-10"><Countdown /></FadeUp><div className="mt-10 space-y-3">{items.map(item=><FadeUp key={item}><p className="rounded-xl bg-white/10 p-4 font-extrabold">🔴 {item}</p></FadeUp>)}</div></div></section>;
 }
 
